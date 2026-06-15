@@ -1,0 +1,77 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Frontmatter has name + description (EN and PL)
+        run: |
+          set -euo pipefail
+          fail=0
+          for skill in skills/konsylium/SKILL.md skills/konsylium-pl/SKILL.md; do
+            if [ ! -f "$skill" ]; then
+              echo "MISSING: $skill"
+              fail=1
+              continue
+            fi
+            # Inspect only the leading YAML frontmatter block (between the first two '---').
+            front=$(awk 'NR==1 && $0=="---"{f=1; next} f && $0=="---"{exit} f{print}' "$skill")
+            if ! printf '%s\n' "$front" | grep -Eq '^name:[[:space:]]*[^[:space:]]'; then
+              echo "MISSING name: in frontmatter of $skill"
+              fail=1
+            fi
+            if ! printf '%s\n' "$front" | grep -Eq '^description:[[:space:]]*'; then
+              echo "MISSING description: in frontmatter of $skill"
+              fail=1
+            fi
+          done
+          [ "$fail" -eq 0 ] || { echo "Frontmatter check failed."; exit 1; }
+          echo "Frontmatter OK (EN + PL)."
+
+      - name: EN/PL edition parity (no drift between language copies)
+        run: |
+          set -euo pipefail
+          en_dir=skills/konsylium
+          pl_dir=skills/konsylium-pl
+          for d in "$en_dir" "$pl_dir"; do
+            [ -d "$d" ] || { echo "MISSING edition directory: $d"; exit 1; }
+          done
+          # Compare relative layouts: top-level SKILL.md plus the set of
+          # subdir/extension slots (references/*.md, assets/*.md). Filenames may
+          # differ across languages (personas.md vs persony.md), so we compare the
+          # structural shape: same dirs, same per-dir count of .md files.
+          layout() {
+            dir="$1"
+            [ -f "$dir/SKILL.md" ] && echo "SKILL.md"
+            for sub in references assets; do
+              if [ -d "$dir/$sub" ]; then
+                n=$(find "$dir/$sub" -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')
+                echo "$sub/:$n"
+              fi
+            done
+          }
+          en_layout=$(layout "$en_dir" | sort)
+          pl_layout=$(layout "$pl_dir" | sort)
+          if [ "$en_layout" != "$pl_layout" ]; then
+            echo "EN/PL layout drift detected."
+            echo "--- EN ($en_dir) ---"; printf '%s\n' "$en_layout"
+            echo "--- PL ($pl_dir) ---"; printf '%s\n' "$pl_layout"
+            exit 1
+          fi
+          echo "EN/PL parity OK:"
+          printf '%s\n' "$en_layout"
+
+      - name: shellcheck install.sh
+        run: |
+          set -euo pipefail
+          shellcheck install.sh
+
+      - name: All checks passed
+        run: echo "All checks passed"
