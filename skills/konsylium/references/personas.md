@@ -5,7 +5,8 @@ Send each prompt as a **separate subagent in an isolated context** (blind pass).
 
 Common tail for every persona (append at the end):
 
-> You answer independently — you do not see other perspectives. Return concisely (≤200 words):
+> You answer independently — you do not see other perspectives. **First, restate the question in
+> one sentence in your own words** (to catch mis-framing). Then return concisely (≤200 words):
 > **Position** (1 sentence) · **2–3 strongest arguments** · **1 weakness of your own stance**.
 > No preamble. This is data for synthesis, not a message to a human.
 
@@ -81,6 +82,13 @@ Base P1–P5 is the core. When the domain calls for it, the Marshal adds/swaps i
 | Maintainability / Debt | readability, coupling, cost of change in 6 months |
 
 Each minted persona inherits the common tail and the independence (blind-pass) rule.
+
+**Curated triads** — ready panels the Marshal can pick for common domains:
+- *Schema / data model:* Architect · Data-integrity · Privacy
+- *Security review:* Security/Compliance · Skeptic/Red-Team · Pragmatist
+- *API / interface design:* Architect · Operator · Skeptic
+- *Build vs adopt:* Architect · Pragmatist · Security · Skeptic
+- *Migration / refactor:* Architect · Data-integrity · Pragmatist · Skeptic
 
 ## Panel selection — Marshal's fallback (heuristic, for obvious questions)
 

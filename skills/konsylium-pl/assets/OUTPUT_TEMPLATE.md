@@ -13,7 +13,9 @@ Nie lista opcji bez werdyktu.>
 
 ## Gdzie się różnili (dissent — min. 1 realna rozbieżność)
 
-- **<perspektywa> vs <perspektywa>:** <na czym polega spór i co z niego wynika>
+Oznacz każdą jako **napięcie wartości** (oba ważne — trade-off) lub **złapany błąd** (realna wada, którą inni przegapili).
+
+- **<perspektywa> vs <perspektywa>** — *(napięcie wartości / złapany błąd)*: <na czym polega spór i co z niego wynika>
 - <kolejna, jeśli jest>
 
 > Jeśli panel rozjechał się ~50/50 — napisz to wprost. Nie wymuszaj konsensusu.

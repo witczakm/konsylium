@@ -65,7 +65,9 @@ Kasuje order/brand bias przed syntezą.
 ### 4. Chairman synteza (z kwotą dissentu)
 W świeżym podejściu przeczytaj P1..Pn jako dane i napisz werdykt wg `assets/OUTPUT_TEMPLATE.md`:
 - **Rekomendacja** (jedna, asertywna, uzasadniona),
-- **Gdzie się różnili** (kwota dissentu — nazwij którą perspektywą była mniejszość),
+- **Gdzie się różnili** (kwota dissentu — min. jedna realna rozbieżność; nazwij którą perspektywą
+  była mniejszość i oznacz każdą jako *napięcie wartości* (oba ważne — trade-off) lub *złapany błąd*
+  (realna wada, którą inni przegapili)),
 - **Czego nie wiemy / co tracimy** (prowadź nierozstrzygniętym, nie pewnym konsensusem),
 - **Następny ruch**.
 Split ~50/50 → **powiedz to**, nie udawaj konsensusu.

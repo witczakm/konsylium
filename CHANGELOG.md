@@ -3,6 +3,20 @@
 All notable changes to this project are documented here. The format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); versioning follows [SemVer](https://semver.org/).
 
+## [1.1.0] — 2026-06-16
+
+Quality borrows from peer projects (ideas only, reimplemented clean-room — see THIRD-PARTY-NOTICES.md).
+
+### Added
+- **Problem-restate gate** — each persona first reframes the question in one sentence (catches mis-framing).
+- **Value-tension vs error-catch** labeling in the synthesis/dissent — separates valid trade-offs from real flaws the others missed.
+- **Curated persona triads** for common domains (schema, security review, API design, build-vs-adopt, migration) to guide the Marshal.
+- Strengthened the dissent quota in the chairman step.
+- `THIRD-PARTY-NOTICES.md` crediting adapted ideas (CC0 / MIT / Apache-2.0 sources).
+
+### Deliberately NOT adopted
+- Multi-round refinement, peer-ranking, embedding clustering, multi-provider in the *core* council — they add rounds/deps or duplicate Mode B, contradicting the one-pass, lightweight design.
+
 ## [1.0.0] — 2026-06-16
 
 First public release.

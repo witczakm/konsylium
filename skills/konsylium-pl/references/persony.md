@@ -5,7 +5,8 @@ Każdy prompt wyślij jako **osobny subagent w izolowanym kontekście** (blind p
 
 Wspólny ogon dla każdej persony (dopisz na końcu):
 
-> Odpowiadasz niezależnie — nie widzisz innych perspektyw. Zwróć zwięźle (≤200 słów):
+> Odpowiadasz niezależnie — nie widzisz innych perspektyw. **Najpierw przeformułuj pytanie jednym
+> zdaniem własnymi słowami** (by złapać złe ramowanie). Potem zwróć zwięźle (≤200 słów):
 > **Stanowisko** (1 zdanie) · **2–3 najmocniejsze argumenty** · **1 słabość własnego stanowiska**.
 > Bez wstępów. To dane do syntezy, nie wiadomość do człowieka.
 
@@ -80,6 +81,13 @@ Baza P1–P5 to rdzeń. Gdy domena tego wymaga, Marszałek dokłada/zamienia na:
 | Utrzymywalność / dług | czytelność, coupling, koszt zmiany za 6 mies. |
 
 Każda nowo mintowana persona dziedziczy wspólny ogon i regułę niezależności (blind pass).
+
+**Gotowe triady** — panele, które Marszałek może wziąć dla typowych domen:
+- *Schemat / model danych:* Architekt · Integralność danych · Prywatność
+- *Przegląd bezpieczeństwa:* Bezpieczeństwo/Compliance · Sceptyk/Red-Team · Pragmatyk
+- *Projekt API / interfejsu:* Architekt · Operator · Sceptyk
+- *Build vs adopt:* Architekt · Pragmatyk · Strażnik danych · Sceptyk
+- *Migracja / refactor:* Architekt · Integralność danych · Pragmatyk · Sceptyk
 
 ## Dobór person — fallback Marszałka (heurystyka, gdy pytanie oczywiste)
 

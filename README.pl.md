@@ -104,7 +104,7 @@ To **pre-check dywergencyjny zasilający decyzję** — nigdy bramka merge. Decy
 
 Gdy decyzja wymaga *prawdziwej niezależności rodziny modeli*, konsylium subagentów jednego dostawcy nie
 jest niezależne. Tryb B routuje pytanie do narzędzia konsensusu cross-model (np.
-[`swarm-consensus`](https://github.com/anthropics/skills) albo
+skill konsensusu wielomodelowego, albo
 [`llm-consortium`](https://github.com/irthomasthomas/llm-consortium)), pinując arbitra do innej rodziny,
 żeby *ewaluator ≠ generator*. Bramka jest **upstream do**, nie zamiast, decyzji człowieka.
 
@@ -201,7 +201,7 @@ decyzje (jako PR) to roadmapa.
 [council-review](https://github.com/ngmeyer/council-review) ·
 [council-of-high-intelligence](https://github.com/0xNyk/council-of-high-intelligence) ·
 [llm-consortium](https://github.com/irthomasthomas/llm-consortium) ·
-[Agent Skills](https://github.com/anthropics/skills) Anthropic.
+[Agent Skills](https://github.com/anthropics/skills) Anthropic. Konkretne zapożyczone idee (z licencjami) są w [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 Wyróżniki tutaj to **adaptacyjny Marszałek**, **pakowanie cross-tool** i jawny rozdział
 **doradczy-vs-bramka**.

@@ -13,7 +13,9 @@ Not a list of options without a verdict.>
 
 ## Where they disagreed (dissent — at least 1 real divergence)
 
-- **<perspective> vs <perspective>:** <what the disagreement is and what follows from it>
+Label each as a **value tension** (both valid — a trade-off) or an **error catch** (a real flaw the others missed).
+
+- **<perspective> vs <perspective>** — *(value tension / error catch)*: <what the disagreement is and what follows>
 - <another, if any>
 
 > If the panel split ~50/50, say so plainly here. Do not force a consensus.

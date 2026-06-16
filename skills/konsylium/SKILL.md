@@ -67,7 +67,9 @@ This removes order/brand bias before synthesis.
 ### 4. Chairman synthesis (with a dissent quota)
 In a fresh pass, read P1..Pn as data and write the verdict per `assets/OUTPUT_TEMPLATE.md`:
 - **Recommendation** (one, assertive, justified),
-- **Where they disagreed** (a real dissent quota — name which perspective held the minority view),
+- **Where they disagreed** (a real dissent quota — at least one genuine divergence; name which
+  perspective held the minority view, and label each as a *value tension* (both valid — a trade-off)
+  or an *error catch* (a real flaw the others missed)),
 - **What we don't know / what we trade off** (lead with the unresolved, not a confident consensus),
 - **Next step**.
 If the panel split ~50/50, **say so** — don't fake consensus.

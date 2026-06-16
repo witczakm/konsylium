@@ -104,7 +104,7 @@ It is a **divergence pre-check that feeds a decision** — never a merge gate. A
 
 When a call needs *genuine model-family independence*, a council of one provider’s subagents isn’t
 independent. Mode B routes the question to a cross-model consensus tool (e.g.
-[`swarm-consensus`](https://github.com/anthropics/skills) or
+a multi-model consensus skill, or
 [`llm-consortium`](https://github.com/irthomasthomas/llm-consortium)), pinning the arbiter to a
 different family so *evaluator ≠ generator*. The gate is **upstream to**, never a replacement for, the
 human decision.
@@ -202,7 +202,7 @@ with your own decisions (as a PR) is the roadmap.
 [council-review](https://github.com/ngmeyer/council-review) ·
 [council-of-high-intelligence](https://github.com/0xNyk/council-of-high-intelligence) ·
 [llm-consortium](https://github.com/irthomasthomas/llm-consortium) ·
-Anthropic’s [Agent Skills](https://github.com/anthropics/skills).
+Anthropic’s [Agent Skills](https://github.com/anthropics/skills). Specific ideas adapted (with their licenses) are listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 The distinctive parts here are the **adaptive Marshal**, the **cross-tool packaging**, and the
 explicit **advisory-vs-gate** split.
