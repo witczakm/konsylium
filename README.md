@@ -15,6 +15,8 @@ for **Claude Code**, **Codex**, and the **Claude / Cowork desktop app** — for 
 hard-to-reverse architecture, contract, or trade-off calls.
 🇬🇧 English · 🇵🇱 [polski README](README.pl.md)
 
+![konsylium demo — a real Mode A run](assets/konsylium-demo.svg)
+
 <details>
 <summary><b>Contents</b></summary>
 
@@ -185,9 +187,11 @@ Threat model and disclosure → [SECURITY.md](SECURITY.md).
 
 ## Evidence and roadmap
 
-The [examples](examples/) are **illustrative single runs, not a benchmark** — treat the council as
-structured divergence, not proof. A small before/after evaluation (decisions where the council surfaced
-a flaw a single pass missed) is the next step on the roadmap.
+A first **[head-to-head eval](EVALS.md)** pits the council against single-pass answers on 5 real
+decisions — and reports it honestly: it clearly helped once, moderately three times, and **not at all
+once** (simple, bounded questions don’t need a panel). The [examples](examples/) are illustrative single
+runs, not a benchmark. Treat the council as structured divergence, not an oracle. Extending the eval
+with your own decisions (as a PR) is the roadmap.
 
 ## Prior art
 

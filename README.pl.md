@@ -15,6 +15,8 @@ dla **Claude Code**, **Codex** i **aplikacji Claude / Cowork** — dla inżynier
 trudnymi do odwrócenia decyzjami architektonicznymi, kontraktowymi lub trade-offami.
 🇵🇱 polski · 🇬🇧 [English README](README.md)
 
+![konsylium demo — realny run Trybu A](assets/konsylium-demo.svg)
+
 <details>
 <summary><b>Spis treści</b></summary>
 
@@ -184,9 +186,11 @@ Model zagrożeń i zgłaszanie → [SECURITY.md](SECURITY.md).
 
 ## Dowody i roadmapa
 
-[Przykłady](examples/) to **ilustracyjne pojedyncze runy, nie benchmark** — traktuj konsylium jako
-ustrukturyzowaną dywergencję, nie dowód. Mały eval before/after (decyzje, gdzie konsylium złapało wadę
-przegapioną w pojedynczym strzale) jest następnym krokiem na roadmapie.
+Pierwszy **[eval head-to-head](EVALS.md)** zestawia konsylium z odpowiedziami single-pass na 5 realnych
+decyzjach — i raportuje to uczciwie: wyraźnie pomogło raz, umiarkowanie trzy razy i **wcale raz** (proste,
+ograniczone pytania nie potrzebują panelu). [Przykłady](examples/) to ilustracyjne pojedyncze runy, nie
+benchmark. Traktuj konsylium jako ustrukturyzowaną dywergencję, nie wyrocznię. Rozszerzenie evala o własne
+decyzje (jako PR) to roadmapa.
 
 ## Prior art
 
