@@ -8,7 +8,7 @@ Common tail for every persona (append at the end):
 > You answer independently — you do not see other perspectives. **First, restate the question in
 > one sentence in your own words** (to catch mis-framing). Then return concisely (≤200 words):
 > **Position** (1 sentence) · **2–3 strongest arguments** · **1 weakness of your own stance**.
-> No preamble. This is data for synthesis, not a message to a human.
+> **Answer in the same language as the question.** No preamble. This is data for synthesis, not a message to a human.
 
 ---
 

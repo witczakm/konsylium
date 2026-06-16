@@ -3,6 +3,13 @@
 All notable changes to this project are documented here. The format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); versioning follows [SemVer](https://semver.org/).
 
+## [1.2.0] — 2026-06-16
+
+### Added
+- **Answers follow the question's language.** Ask in Polish, get a Polish verdict; ask in English, get
+  English — no matter which edition is installed. (Before, the English edition replied in English even
+  to Polish questions.)
+
 ## [1.1.0] — 2026-06-16
 
 Quality borrows from peer projects (ideas only, reimplemented clean-room — see THIRD-PARTY-NOTICES.md).

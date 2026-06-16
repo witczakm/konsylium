@@ -93,6 +93,8 @@ Mode B only routes. It does not fake independence and does not copy those tools'
 
 ## Hard rules
 
+- **Answer in the user's language.** Write the verdict — and have each persona answer — in the same
+  language as the question (a Polish question gets a Polish verdict).
 - **Pre-check, not a gate.** Mode A never gates a merge — a human decides.
 - **Never send private/sensitive data to a cloud model.** If the question contains it → stop,
   keep it local, Mode B routing to cloud is blocked.

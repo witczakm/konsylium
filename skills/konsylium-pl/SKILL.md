@@ -91,6 +91,8 @@ Tryb B tylko routuje. Nie udaje niezależności i nie kopiuje logiki tamtych nar
 
 ## Zasady twarde
 
+- **Odpowiadaj w języku użytkownika.** Werdykt — i odpowiedzi każdej persony — pisz w języku pytania
+  (pytanie po polsku → werdykt po polsku).
 - **Pre-check, nie bramka.** Tryb A nigdy nie gate'uje merge — decyduje człowiek.
 - **Nigdy dane prywatne/wrażliwe do modelu w chmurze.** Pytanie je zawiera → STOP, zostaje
   lokalnie, routing Tryb B do chmury zablokowany.

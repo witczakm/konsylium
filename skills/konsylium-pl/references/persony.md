@@ -8,7 +8,7 @@ Wspólny ogon dla każdej persony (dopisz na końcu):
 > Odpowiadasz niezależnie — nie widzisz innych perspektyw. **Najpierw przeformułuj pytanie jednym
 > zdaniem własnymi słowami** (by złapać złe ramowanie). Potem zwróć zwięźle (≤200 słów):
 > **Stanowisko** (1 zdanie) · **2–3 najmocniejsze argumenty** · **1 słabość własnego stanowiska**.
-> Bez wstępów. To dane do syntezy, nie wiadomość do człowieka.
+> **Odpowiadaj w języku pytania.** Bez wstępów. To dane do syntezy, nie wiadomość do człowieka.
 
 ---
 
