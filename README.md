@@ -1,8 +1,7 @@
-# konsylium — an AI council that picks its own experts
+# konsylium — a few AI opinions instead of one
 
-> Hand one command your hardest decision. A **Marshal** assembles the right experts *for that
-> question*, interrogates them independently, and returns one verdict — with the disagreement kept
-> on the table, not averaged away.
+> A hard call? Instead of one AI answer, you get a **panel of advisors** with different viewpoints —
+> each judges it on its own, and you get a single conclusion with the disagreements clearly flagged.
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
@@ -10,33 +9,32 @@
 ![Codex](https://img.shields.io/badge/Codex-skill-111111)
 ![Claude app](https://img.shields.io/badge/Claude%20app-skill-8a63d2)
 
-**konsylium** (Polish, *“council”*) is an [Agent Skill](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
-for **Claude Code**, **Codex**, and the **Claude / Cowork desktop app** — for engineers facing
-hard-to-reverse architecture, contract, or trade-off calls.
+Think of a **medical board**: several specialists look at one case separately, then someone distils
+their views into a single conclusion. Here, AI does it. Works in **Claude Code**, **Codex**, and the
+**Claude app**.
 🇬🇧 English · 🇵🇱 [polski README](README.pl.md)
 
-![konsylium demo — a real Mode A run](assets/konsylium-demo.svg)
+![konsylium — how it works](assets/konsylium-demo.svg)
 
 <details>
 <summary><b>Contents</b></summary>
 
-- [Quickstart](#quickstart)
-- [See it in action](#see-it-in-action)
-- [Why konsylium](#why-konsylium)
+- [Quick start](#quick-start)
+- [See an example](#see-an-example)
+- [Why?](#why)
 - [How it works](#how-it-works)
-- [When to use it](#when-to-use-it)
+- [When it helps (and when it doesn't)](#when-it-helps-and-when-it-doesnt)
 - [Install](#install)
-- [How it fits your tools](#how-it-fits-your-tools)
-- [CLI usage](#cli-usage)
-- [Data boundary and privacy](#data-boundary-and-privacy)
-- [Honest limitations](#honest-limitations)
-- [Evidence and roadmap](#evidence-and-roadmap)
-- [Prior art](#prior-art)
-- [Contributing, changelog, license](#contributing-changelog-license)
+- [Also from the terminal](#also-from-the-terminal)
+- [Privacy & safety](#privacy--safety)
+- [Honestly: what it does NOT do](#honestly-what-it-does-not-do)
+- [Does it actually work?](#does-it-actually-work)
+- [What it builds on (credits)](#what-it-builds-on-credits)
+- [Contributing & license](#contributing--license)
 
 </details>
 
-## Quickstart
+## Quick start
 
 ```sh
 git clone https://github.com/witczakm/konsylium.git && cd konsylium && sh install.sh
@@ -45,173 +43,152 @@ git clone https://github.com/witczakm/konsylium.git && cd konsylium && sh instal
 Then, in a **new Claude Code session**:
 
 ```
-/konsylium <your hardest open decision>
+/konsylium <the hardest decision you need to make>
 ```
 
-You get a recommendation, the **dissent** between perspectives, and an honest **“what we don’t know.”**
-Codex, the desktop app, and the Polish edition → [Install](#install).
+You get: one recommendation, a clear "where the advisors disagreed", and an honest "what we still don't
+know". Codex and the desktop app are covered below.
 
-## See it in action
+## See an example
 
-A real run — *“store bidder PII in the same table as scoring, or split?”* The Marshal didn’t use a
-generic panel; it **minted Privacy, Compliance and Data-integrity personas because it read the
-question** — and two of them independently caught a requirement an architect-only panel usually misses:
+Someone asked how to design a database (where to keep customer data). Instead of a single answer,
+konsylium assembled advisors for **privacy, compliance and data integrity** — and two of them
+independently caught something a plain answer would miss:
 
-> **Recommendation:** Separate tables **+ an immutable snapshot** of the bidder’s identifying data at
-> evaluation time — a plain foreign key isn’t enough, because a later name/ID correction must not
-> rewrite the history of a past score.
-> **Dissent:** the Pragmatist allowed a single-table MVP for the trivial case; the Skeptic attacked
-> the “FK-only” split as false auditability.
-> **What we don’t know:** whether the contacts are natural persons (privacy regime) …
+> **Recommendation:** split the data into separate tables and store a "snapshot" of the data as it was
+> at decision time — because a later name correction must not rewrite the history of an earlier decision.
+> **Where they differed:** one advisor allowed a simpler start; another pushed back hard on it.
+> **What we don't know:** whether these are personal data (then GDPR applies)…
 
 Full verdict and three more decisions → **[examples/](examples/)**.
 
-## Why konsylium
+## Why?
 
-A single model gives a single, confident answer — and confidently agrees with itself. The expensive
-cost in software is rarely the code; it’s **building the wrong thing** and finding out three sprints
-later. Review and second opinions fix that — but pasting the same prompt into three chatbots and
-merging the replies by hand is slow, so it gets skipped.
-
-`konsylium` makes it one command, and front-loads the critique **before** you commit.
-
-| | konsylium | a typical “LLM council” |
-|---|---|---|
-| **Panel** | **adaptive** — chosen *per question*, mints domain experts | fixed roster |
-| **Tools** | one skill across **Claude Code + Codex + desktop app** | usually one surface |
-| **Modes** | explicit **advisory** vs **independent gate** — never conflated | usually one |
-| **Output** | recommendation **+ preserved dissent + “what we don’t know”** | merged answer |
-| **Rounds** | one blind pass + one synthesis (evidence-based) | sometimes N-round debate |
+A single AI answer sounds confident — and usually agrees with itself. But the costliest mistake isn't a
+bug in the code; it's **building the wrong thing** and realizing it too late. A second opinion helps, but
+manually asking several models and stitching the answers together is tedious enough that most people skip
+it. konsylium does it in one command — and surfaces the weak spots in your decision **before** you commit.
 
 ## How it works
 
-```
-/konsylium <question>
-   │
-   1. Marshal (P0)   reads the question → picks 3–6 personas for THIS problem
-   │                 (guardrails: ≥1 adversary · max 6 · each a different failure mode)
-   2. Blind pass     each persona answers in an ISOLATED context, in parallel,
-   │                 never seeing the others  (prevents conformity)
-   3. Anonymize      answers relabeled P1..Pn (no names, no order bias)
-   4. Chairman       one verdict: recommendation + where they disagreed (dissent)
-                     + "what we don't know" + next step
-```
+Four simple steps, in plain terms:
 
-It is a **divergence pre-check that feeds a decision** — never a merge gate. A human decides.
-**Non-deterministic by design** (divergence is the point); pin the panel in Mode B for reproducibility.
+1. **Pick the panel.** A "chair" reads your question and assembles 3–6 advisors that actually fit it
+   (e.g. an architect, a skeptic, a data specialist). There's always someone playing devil's advocate.
+2. **Independent opinions.** Each advisor answers on their own, **without seeing the others** — so they
+   don't copy or defer to one another.
+3. **No names.** Opinions go into the summary anonymously, so the argument counts, not "who said it".
+4. **The verdict.** You get one recommendation, a clear "where they differed", an honest "what we don't
+   know", and a next step.
 
-### Mode B — independent gate (routing)
+It's **a decision aid, not a verdict** — the final call is always yours.
 
-When a call needs *genuine model-family independence*, a council of one provider’s subagents isn’t
-independent. Mode B routes the question to a cross-model consensus tool (e.g.
-a multi-model consensus skill, or
-[`llm-consortium`](https://github.com/irthomasthomas/llm-consortium)), pinning the arbiter to a
-different family so *evaluator ≠ generator*. The gate is **upstream to**, never a replacement for, the
-human decision.
+### Two modes
 
-## When to use it
+- **Regular (advisory)** — the default. A few opinions in one session, fast. For most decisions.
+- **For important / irreversible calls** — when you want genuinely independent scrutiny, konsylium hands
+  the question to a tool that asks AI models from **different vendors** (not just one). A panel from a
+  single provider isn't the same as a second opinion from an independent one.
 
-- A hard-to-reverse decision; a contract / interface / invariant; security or cost.
-- Choosing between 2–3 alternatives where the answer isn’t obvious.
-- You have one option and want it attacked (steelman the opposition).
-- Before a design doc / ADR — get divergence before locking it.
-- The model keeps circling (repeated proposals, failed retries).
+## When it helps (and when it doesn't)
 
-**Skip it** for trivial/factual questions or pure execution — it’d just burn tokens.
+**Reach for it when:**
+- the decision is hard to reverse or costly,
+- you're choosing between 2–3 options and it isn't obvious,
+- you have an idea and want it honestly challenged,
+- you're writing an important doc/plan and want different angles before locking it.
+
+**Skip it** for simple, obvious questions — a single answer is plenty there.
 
 ## Install
 
-**Requirements:** Claude Code or Codex CLI (or the Claude desktop app). Model-agnostic — it uses
-whatever your CLI is configured with. Two editions ship in the repo: English (`skills/konsylium/`)
-and Polish (`skills/konsylium-pl/`); both register the `/konsylium` command.
+**What you need:** Claude Code or Codex (or the Claude app). The repo ships two language editions —
+English and Polish; both register the `/konsylium` command.
 
 ```sh
-sh install.sh --dry-run     # preview exactly what it writes — touches nothing
-sh install.sh               # English → Claude Code + Codex
+sh install.sh --dry-run     # preview — writes nothing
+sh install.sh               # install (English) into Claude Code + Codex
 ```
 
-An existing install is backed up, never silently overwritten. New session → `/konsylium`.
+An existing install is backed up, never silently overwritten. Then start a new session.
 
 <details>
-<summary><b>Codex, the desktop app, and the Polish edition</b></summary>
+<summary><b>Codex, the desktop app, the Polish edition</b></summary>
 
 - **Polish edition:** `sh install.sh --lang pl`
-- **Only one tool:** `--claude-only` or `--codex-only`
-- **Claude / Cowork desktop app** (it imports a ZIP, it doesn’t read those folders):
-  Customize → Skills → **“+” → Create skill** → upload `dist/konsylium-en.zip` (or `-pl`) → toggle **ON**.
+- **One tool only:** add `--claude-only` or `--codex-only`
+- **Claude / Cowork desktop app** (it imports a ZIP, it doesn't read the folders):
+  Customize → Skills → **"+" → Create skill** → upload `dist/konsylium-en.zip` (or `-pl`) → toggle **ON**.
 
 </details>
 
-## How it fits your tools
+## Also from the terminal
 
-- It’s a **Skill** (Markdown instructions Claude follows), **not an MCP server** — no daemon, no
-  transport, nothing to run. The `/konsylium` trigger is the skill’s own invocation.
-- Each persona runs in its **own isolated subagent context**; only the final synthesis returns to your
-  main thread — your context stays clean.
-- **Skills don’t sync across surfaces.** Claude Code, Codex and the app are three independent copies;
-  update = re-install (or re-import the ZIP) per surface.
-
-## CLI usage
+You don't have to be in a chat — it works as a one-liner too (handy for automation, e.g. in CI):
 
 ```sh
-claude -p "/konsylium should we store bidder PII in the same table as scoring?"
-codex exec "use the konsylium skill: monolith vs microservices for a 3-person team?"
+claude -p "/konsylium one table to start, or split the data?"
+codex exec "use the konsylium skill: monolith or microservices for a small team?"
 ```
 
-- **Scriptable** — wire a council into CI, a pre-commit hook, or a cron job.
-- **Cold, fresh context** — a head-less run isn’t biased by your current chat.
-- **Parallel & fast** — personas run concurrently; a verdict in ~1–2 minutes.
-- **Pipeable** — `> verdict.md` and drop it into your PR, decision log, or ADR.
+Pipe the result to a file (`> verdict.md`) and drop it into your notes, a PR description, or a decision log.
 
-## Data boundary and privacy
+## Privacy & safety
 
-- **The skill makes no network calls and has no telemetry of its own** — it’s plain Markdown; the
-  only executable is `install.sh` (`sh`/`cp`/`sed`, local).
-- The one outbound path is *you* letting the agent route **Mode B** to a cloud model — your choice.
-- **Never put secrets or private/sensitive data in a council prompt.**
+- **The skill itself sends nothing to the internet and collects no data** — it's plain text instructions;
+  the only script (`install.sh`) just copies files locally.
+- Anything reaches the cloud only when **you** deliberately use the "important decisions" mode.
+- **Don't paste secrets or sensitive data** into a question.
 
-Threat model and disclosure → [SECURITY.md](SECURITY.md).
+Details and how to report issues → [SECURITY.md](SECURITY.md).
 
-## Honest limitations
+## Honestly: what it does NOT do
 
-- **Model-mediated, not deterministic.** The skill *instructs* a blind parallel dispatch; it doesn’t
-  hard-enforce it. The same question can yield a different panel — the point in divergence mode. Pin in Mode B.
-- **No built-in diversity measurement.** Personas can *sound* different yet *think* alike; the Marshal’s
-  “different failure mode” guardrail mitigates but doesn’t measure this.
-- **Multi-round debate doesn’t help — and can hurt.** Research on multi-agent debate
-  ([Should we be going MAD?](https://arxiv.org/abs/2311.17371) and conformity studies) shows more
-  rounds don’t reliably beat self-consistency and can flip correct answers to wrong. So konsylium runs
-  one blind pass + one synthesis — no rounds.
-- **Cost.** A run spawns 3–6 subagents — cheaper than building the wrong thing, pricier than a one-line
-  answer. Reserve it for decisions that matter.
+No miracle claims:
 
-## Evidence and roadmap
+- **It's a thinking aid, not an oracle.** For a simple question, don't use it — one answer is enough.
+- **The same question can give a slightly different panel and a different answer.** In the regular mode
+  that's on purpose (the point is varied angles). If you need repeatability, use the "important decisions" mode.
+- **Advisors can sound different yet think alike.** We make sure each looks from a different angle, but
+  we don't measure that.
+- **It costs a bit more than one question** (it runs several opinions at once). Use it for decisions that
+  matter — still cheaper than building the wrong thing.
+- **No endless arguing.** Research shows forcing AI through many rounds of debate doesn't improve quality
+  (and sometimes hurts), so we keep it to one round.
 
-A first **[head-to-head eval](EVALS.md)** pits the council against single-pass answers on 5 real
-decisions — and reports it honestly: it clearly helped once, moderately three times, and **not at all
-once** (simple, bounded questions don’t need a panel). The [examples](examples/) are illustrative single
-runs, not a benchmark. Treat the council as structured divergence, not an oracle. Extending the eval
-with your own decisions (as a PR) is the roadmap.
+## Does it actually work?
 
-## Prior art
+No promises that it always does. I ran a small, honest test on **5 real decisions**: it clearly helped
+**once**, moderately **three times**, and **not at all once** (simple questions don't need a panel).
+Details: [EVALS.md](EVALS.md). Treat it as a way to get a broader view, not an infallible oracle.
+
+## What it builds on (credits)
+
+The "AI panel" idea isn't new — a nod to:
+[karpathy/llm-council](https://github.com/karpathy/llm-council),
+[council-review](https://github.com/ngmeyer/council-review),
+[council-of-high-intelligence](https://github.com/0xNyk/council-of-high-intelligence),
+[llm-consortium](https://github.com/irthomasthomas/llm-consortium),
+Anthropic's [Agent Skills](https://github.com/anthropics/skills).
+
+What konsylium adds: **a panel chosen for the question** (not a fixed roster), **one package across
+several tools**, and a clear split between **"advising" and "independent scrutiny"**. The specific
+borrowed ideas and their licenses are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 <details>
-<summary>konsylium stands on a healthy, crowded ecosystem — credit where due</summary>
+<summary><b>For the technically curious</b></summary>
 
-[karpathy/llm-council](https://github.com/karpathy/llm-council) ·
-[council-review](https://github.com/ngmeyer/council-review) ·
-[council-of-high-intelligence](https://github.com/0xNyk/council-of-high-intelligence) ·
-[llm-consortium](https://github.com/irthomasthomas/llm-consortium) ·
-Anthropic’s [Agent Skills](https://github.com/anthropics/skills). Specific ideas adapted (with their licenses) are listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
-
-The distinctive parts here are the **adaptive Marshal**, the **cross-tool packaging**, and the
-explicit **advisory-vs-gate** split.
+- It's a **skill** (Markdown instructions the AI runs) — not a server; nothing to launch or maintain.
+- Each advisor runs in its **own clean context**; only the summary returns to the main conversation.
+- Skills **don't sync across tools** — install separately in each (Claude Code, Codex, the app).
+- The "important decisions" mode routes the question to a multi-model consensus tool (e.g.
+  [`llm-consortium`](https://github.com/irthomasthomas/llm-consortium)) so a *different* model evaluates
+  than the one that generated — and always before, never instead of, the human's call.
 
 </details>
 
-## Contributing, changelog, license
+## Contributing & license
 
-PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) (one rule that matters: **keep the EN and PL
-editions in parity**; CI enforces it). History in [CHANGELOG.md](CHANGELOG.md).
+PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). History: [CHANGELOG.md](CHANGELOG.md).
 
-MIT © 2026 Michał Witczak.
+MIT © 2026 Michał Witczak. Use it freely.

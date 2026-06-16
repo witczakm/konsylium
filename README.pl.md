@@ -1,7 +1,7 @@
 # konsylium — kilka opinii AI zamiast jednej
 
-> Zadaj jedno trudne pytanie. Zamiast jednej, pewnej siebie odpowiedzi AI, dostajesz **mały panel
-> doradców** o różnym spojrzeniu i **jeden przemyślany werdykt** — razem z tym, w czym się nie zgodzili.
+> Trudna decyzja? Zamiast jednej odpowiedzi AI masz **panel doradców** o różnych spojrzeniach — każdy
+> ocenia ją osobno, a Ty dostajesz jeden wniosek z jasno zaznaczonymi różnicami zdań.
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
@@ -64,12 +64,11 @@ Pełny werdykt i trzy inne decyzje → **[examples/](examples/)** (po angielsku)
 
 ## Po co to?
 
-Jeden model AI daje jedną, pewną siebie odpowiedź — i zwykle sam się z nią zgadza. A najdroższy błąd
-to nie zły kod, tylko **zbudowanie nie tej rzeczy** i odkrycie tego za późno. Można to ratować pytając
-o drugą opinię — ale wklejanie tego samego pytania do trzech chatbotów i sklejanie odpowiedzi jest
-żmudne, więc zwykle się to pomija.
+Pojedyncza odpowiedź AI brzmi pewnie — i zwykle sama siebie potwierdza. A najdroższa pomyłka to nie
+błąd w kodzie, lecz **zbudowanie nie tej rzeczy** i zorientowanie się za późno. Druga opinia pomaga,
+ale ręczne odpytywanie kilku modeli i sklejanie odpowiedzi jest tak żmudne, że zwykle się tego odpuszcza.
 
-konsylium robi to za Ciebie jedną komendą — i pokazuje słabe punkty decyzji, **zanim** się w nią wpakujesz.
+konsylium robi to jedną komendą — i pokazuje słabe punkty decyzji, **zanim** w nią wejdziesz.
 
 ## Jak to działa
 
