@@ -16,7 +16,8 @@ DO_CLAUDE=1
 DO_CODEX=1
 DRY=0
 
-REPO_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+CDPATH=''
+REPO_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
 
 usage() {
   cat <<EOF
