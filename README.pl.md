@@ -1,7 +1,8 @@
 # konsylium — kilka opinii AI zamiast jednej
 
-> Trudna decyzja? Zamiast jednej odpowiedzi AI masz **panel doradców** o różnych spojrzeniach — każdy
-> ocenia ją osobno, a Ty dostajesz jeden wniosek z jasno zaznaczonymi różnicami zdań.
+> Jeden model AI zawsze brzmi pewnie — ale pewność to nie to samo co racja. konsylium zwołuje **panel
+> doradców**, którzy patrzą na Twoją decyzję z różnych stron, oceniają ją niezależnie i pokazują Ci nie
+> tylko werdykt, ale i to, w czym się nie zgodzili.
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
@@ -9,9 +10,7 @@
 ![Codex](https://img.shields.io/badge/Codex-skill-111111)
 ![Claude app](https://img.shields.io/badge/Claude%20app-skill-8a63d2)
 
-Tak jak **konsylium lekarskie** — kilku specjalistów pochyla się nad jednym przypadkiem, a potem
-ktoś zbiera ich zdania w jeden wniosek. Tutaj robi to AI. Działa w **Claude Code**, **Codex**
-i **aplikacji Claude**.
+Skill dla **Claude Code**, **Codex** i **aplikacji Claude** — kilku doradców AI zamiast jednego.
 🇵🇱 polski · 🇬🇧 [English README](README.md)
 
 ![konsylium — przykład działania](assets/konsylium-demo.svg)
@@ -40,11 +39,15 @@ i **aplikacji Claude**.
 git clone https://github.com/witczakm/konsylium.git && cd konsylium && sh install.sh --lang pl
 ```
 
-Potem w **nowej sesji Claude Code** wpisz:
+Potem w **nowej sesji Claude Code** zadaj realne pytanie, np.:
 
 ```
-/konsylium <twoja najtrudniejsza decyzja do podjęcia>
+/konsylium monolit czy mikroserwisy dla małego zespołu?
+/konsylium podnieść ceny o 30% teraz, czy poczekać?
+/konsylium jedna tabela na dane klientów, czy rozdzielić?
 ```
+
+…albo cokolwiek własnego: `/konsylium <Twoja decyzja>`.
 
 Dostajesz: jedną rekomendację, jasne „w czym doradcy się różnili" i uczciwe „czego jeszcze nie wiadomo".
 Instalację w Codex i aplikacji opisuję niżej.
@@ -64,11 +67,10 @@ Pełny werdykt i trzy inne decyzje → **[examples/](examples/)** (po angielsku)
 
 ## Po co to?
 
-Pojedyncza odpowiedź AI brzmi pewnie — i zwykle sama siebie potwierdza. A najdroższa pomyłka to nie
-błąd w kodzie, lecz **zbudowanie nie tej rzeczy** i zorientowanie się za późno. Druga opinia pomaga,
-ale ręczne odpytywanie kilku modeli i sklejanie odpowiedzi jest tak żmudne, że zwykle się tego odpuszcza.
-
-konsylium robi to jedną komendą — i pokazuje słabe punkty decyzji, **zanim** w nią wejdziesz.
+Najgorsze decyzje wyglądają na świetne — aż do chwili, gdy jest za późno. Zwykle nie chodzi o zły kod,
+tylko o zbudowanie **nie tej rzeczy**. Druga opinia by pomogła, ale komu chce się ręcznie odpytywać trzy
+modele i sklejać odpowiedzi? konsylium robi to za Ciebie jedną komendą — i wytyka słabe punkty, **zanim**
+się w nie wpakujesz.
 
 ## Jak to działa
 

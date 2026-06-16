@@ -1,7 +1,8 @@
 # konsylium — a few AI opinions instead of one
 
-> A hard call? Instead of one AI answer, you get a **panel of advisors** with different viewpoints —
-> each judges it on its own, and you get a single conclusion with the disagreements clearly flagged.
+> Every AI model sounds confident — but confidence isn't the same as being right. konsylium convenes a
+> **panel of advisors** who look at your decision from different angles, judge it independently, and show
+> you not just a verdict but exactly where they disagreed.
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
@@ -9,9 +10,7 @@
 ![Codex](https://img.shields.io/badge/Codex-skill-111111)
 ![Claude app](https://img.shields.io/badge/Claude%20app-skill-8a63d2)
 
-Think of a **medical board**: several specialists look at one case separately, then someone distils
-their views into a single conclusion. Here, AI does it. Works in **Claude Code**, **Codex**, and the
-**Claude app**.
+A skill for **Claude Code**, **Codex**, and the **Claude app** — a few AI advisors instead of one.
 🇬🇧 English · 🇵🇱 [polski README](README.pl.md)
 
 ![konsylium — how it works](assets/konsylium-demo.svg)
@@ -40,11 +39,15 @@ their views into a single conclusion. Here, AI does it. Works in **Claude Code**
 git clone https://github.com/witczakm/konsylium.git && cd konsylium && sh install.sh
 ```
 
-Then, in a **new Claude Code session**:
+Then, in a **new Claude Code session**, ask a real question — e.g.:
 
 ```
-/konsylium <the hardest decision you need to make>
+/konsylium monolith or microservices for a small team?
+/konsylium raise prices 30% now, or wait?
+/konsylium one table for customer data, or split it?
 ```
+
+…or anything of your own: `/konsylium <your decision>`.
 
 You get: one recommendation, a clear "where the advisors disagreed", and an honest "what we still don't
 know". Codex and the desktop app are covered below.
@@ -64,10 +67,9 @@ Full verdict and three more decisions → **[examples/](examples/)**.
 
 ## Why?
 
-A single AI answer sounds confident — and usually agrees with itself. But the costliest mistake isn't a
-bug in the code; it's **building the wrong thing** and realizing it too late. A second opinion helps, but
-manually asking several models and stitching the answers together is tedious enough that most people skip
-it. konsylium does it in one command — and surfaces the weak spots in your decision **before** you commit.
+The worst decisions look great — right up until it's too late. It's rarely bad code; it's building **the
+wrong thing**. A second opinion would help, but who wants to hand-prompt three models and stitch the
+answers together? konsylium does it in one command — and flags the weak spots **before** you walk into them.
 
 ## How it works
 
