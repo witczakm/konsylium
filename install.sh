@@ -58,9 +58,9 @@ install_to() {
   dest="$1/skills/$SKILL_ID"; tool="$2"
   echo "$tool: $dest"
   if [ -e "$dest" ]; then
-    bak="$dest.bak.$(date +%Y%m%d-%H%M%S)"
+    bakdir="$1/skills-backups"; bak="$bakdir/$SKILL_ID.$(date +%Y%m%d-%H%M%S)"
     echo "  existing install found -> backing up to: $bak"
-    [ "$DRY" = 1 ] || mv "$dest" "$bak"
+    [ "$DRY" = 1 ] || { mkdir -p "$bakdir"; mv "$dest" "$bak"; }
   fi
   if [ "$DRY" = 1 ]; then
     echo "  would write: SKILL.md, references/*.md, assets/*.md (name normalized to '$SKILL_ID')"
