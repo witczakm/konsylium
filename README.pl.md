@@ -1,8 +1,7 @@
-# konsylium — konsylium AI, które samo dobiera ekspertów
+# konsylium — kilka opinii AI zamiast jednej
 
-> Oddaj jednej komendzie swoją najtrudniejszą decyzję. **Marszałek** dobiera właściwych ekspertów
-> *pod to pytanie*, przepytuje ich niezależnie i zwraca jeden werdykt — z zachowaną rozbieżnością
-> na stole, nie uśrednioną.
+> Zadaj jedno trudne pytanie. Zamiast jednej, pewnej siebie odpowiedzi AI, dostajesz **mały panel
+> doradców** o różnym spojrzeniu i **jeden przemyślany werdykt** — razem z tym, w czym się nie zgodzili.
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
@@ -10,207 +9,188 @@
 ![Codex](https://img.shields.io/badge/Codex-skill-111111)
 ![Claude app](https://img.shields.io/badge/Claude%20app-skill-8a63d2)
 
-**konsylium** to [Agent Skill](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
-dla **Claude Code**, **Codex** i **aplikacji Claude / Cowork** — dla inżynierów stojących przed
-trudnymi do odwrócenia decyzjami architektonicznymi, kontraktowymi lub trade-offami.
+Tak jak **konsylium lekarskie** — kilku specjalistów pochyla się nad jednym przypadkiem, a potem
+ktoś zbiera ich zdania w jeden wniosek. Tutaj robi to AI. Działa w **Claude Code**, **Codex**
+i **aplikacji Claude**.
 🇵🇱 polski · 🇬🇧 [English README](README.md)
 
-![konsylium demo — realny run Trybu A](assets/konsylium-demo.svg)
+![konsylium — przykład działania](assets/konsylium-demo.svg)
 
 <details>
 <summary><b>Spis treści</b></summary>
 
-- [Quickstart](#quickstart)
-- [Zobacz w działaniu](#zobacz-w-działaniu)
-- [Dlaczego konsylium](#dlaczego-konsylium)
-- [Jak działa](#jak-działa)
-- [Kiedy używać](#kiedy-używać)
+- [Szybki start](#szybki-start)
+- [Zobacz przykład](#zobacz-przykład)
+- [Po co to?](#po-co-to)
+- [Jak to działa](#jak-to-działa)
+- [Kiedy to pomaga (a kiedy nie)](#kiedy-to-pomaga-a-kiedy-nie)
 - [Instalacja](#instalacja)
-- [Jak wpasowuje się w narzędzia](#jak-wpasowuje-się-w-narzędzia)
-- [Użycie z CLI](#użycie-z-cli)
-- [Granica danych i prywatność](#granica-danych-i-prywatność)
-- [Uczciwe ograniczenia](#uczciwe-ograniczenia)
-- [Dowody i roadmapa](#dowody-i-roadmapa)
-- [Prior art](#prior-art)
-- [Kontrybucje, changelog, licencja](#kontrybucje-changelog-licencja)
+- [Możesz też z terminala](#możesz-też-z-terminala)
+- [Prywatność i bezpieczeństwo](#prywatność-i-bezpieczeństwo)
+- [Szczerze: czego to NIE robi](#szczerze-czego-to-nie-robi)
+- [Czy to naprawdę działa?](#czy-to-naprawdę-działa)
+- [Na czym bazuje (podziękowania)](#na-czym-bazuje-podziękowania)
+- [Współtworzenie i licencja](#współtworzenie-i-licencja)
 
 </details>
 
-## Quickstart
+## Szybki start
 
 ```sh
 git clone https://github.com/witczakm/konsylium.git && cd konsylium && sh install.sh --lang pl
 ```
 
-Następnie, w **nowej sesji Claude Code**:
+Potem w **nowej sesji Claude Code** wpisz:
 
 ```
-/konsylium <twoja najtrudniejsza otwarta decyzja>
+/konsylium <twoja najtrudniejsza decyzja do podjęcia>
 ```
 
-Dostajesz rekomendację, **dissent** między perspektywami i uczciwe **„czego nie wiemy".**
-Codex, aplikacja desktop i edycja angielska → [Instalacja](#instalacja).
+Dostajesz: jedną rekomendację, jasne „w czym doradcy się różnili" i uczciwe „czego jeszcze nie wiadomo".
+Instalację w Codex i aplikacji opisuję niżej.
 
-## Zobacz w działaniu
+## Zobacz przykład
 
-Realny run — *„trzymać dane oferentów w tej samej tabeli co scoring, czy rozdzielić?"* Marszałek nie
-użył generycznego panelu; **zmintował persony Prywatność, Compliance i Integralność danych, bo
-przeczytał pytanie** — a dwie z nich niezależnie złapały wymóg, który panel sam-architekt zwykle pomija:
+Ktoś zapytał, jak zaprojektować bazę danych (gdzie trzymać dane klientów). Zamiast jednej odpowiedzi,
+konsylium samo dobrało doradców od **prywatności, zgodności z prawem i porządku w danych** — i dwóch
+z nich niezależnie złapało rzecz, którą zwykła odpowiedź by pominęła:
 
-> **Rekomendacja:** Osobne tabele **+ immutable snapshot** danych identyfikacyjnych oferenta w momencie
-> oceny — sam klucz obcy nie wystarczy, bo późniejsza korekta nazwy/NIP nie może przepisać historii
-> wcześniejszego scoringu.
-> **Dissent:** Pragmatyk dopuścił jedną tabelę dla trywialnego MVP; Sceptyk zaatakował wariant
-> „tylko FK" jako fałszywą audytowalność.
-> **Czego nie wiemy:** czy kontakty to osoby fizyczne (reżim RODO) …
+> **Rekomendacja:** rozdziel dane na osobne tabele i zapisz „migawkę" danych z chwili oceny — bo
+> późniejsza poprawka nazwy nie może zmienić historii wcześniejszej decyzji.
+> **W czym się różnili:** jeden doradca dopuścił prostsze rozwiązanie na start; inny ostro je podważył.
+> **Czego nie wiemy:** czy to dane osób fizycznych (wtedy wchodzi RODO)…
 
-Pełny werdykt i trzy kolejne decyzje → **[examples/](examples/)** (w języku angielskim).
+Pełny werdykt i trzy inne decyzje → **[examples/](examples/)** (po angielsku).
 
-## Dlaczego konsylium
+## Po co to?
 
-Pojedynczy model daje jedną, pewną odpowiedź — i pewnie zgadza się sam ze sobą. Najdroższy koszt w
-softcie to rzadko kod; to **zbudowanie złej rzeczy** i odkrycie tego trzy sprinty później. Review i
-druga opinia to naprawiają — ale pastowanie tego samego promptu do trzech chatbotów i ręczne scalanie
-jest wolne, więc się je pomija.
+Jeden model AI daje jedną, pewną siebie odpowiedź — i zwykle sam się z nią zgadza. A najdroższy błąd
+to nie zły kod, tylko **zbudowanie nie tej rzeczy** i odkrycie tego za późno. Można to ratować pytając
+o drugą opinię — ale wklejanie tego samego pytania do trzech chatbotów i sklejanie odpowiedzi jest
+żmudne, więc zwykle się to pomija.
 
-`konsylium` zamienia to w jedną komendę i przesuwa krytykę **zanim** się zaangażujesz.
+konsylium robi to za Ciebie jedną komendą — i pokazuje słabe punkty decyzji, **zanim** się w nią wpakujesz.
 
-| | konsylium | typowy „LLM council" |
-|---|---|---|
-| **Panel** | **adaptacyjny** — dobierany *pod pytanie*, mintuje ekspertów domenowych | sztywna lista |
-| **Narzędzia** | jeden skill na **Claude Code + Codex + aplikację** | zwykle jedna powierzchnia |
-| **Tryby** | jawny **doradczy** vs **niezależna bramka** — bez mieszania | zwykle jeden |
-| **Output** | rekomendacja **+ zachowany dissent + „czego nie wiemy"** | scalona odpowiedź |
-| **Rundy** | 1 blind pass + 1 synteza (oparte na dowodach) | czasem N-rundowa debata |
+## Jak to działa
 
-## Jak działa
+Cztery proste kroki, po ludzku:
 
-```
-/konsylium <pytanie>
-   │
-   1. Marszałek (P0)  czyta pytanie → dobiera 3–6 person pod TEN problem
-   │                  (guardraile: ≥1 adwersarz · max 6 · każda inny tryb porażki)
-   2. Blind pass      każda persona odpowiada w IZOLOWANYM kontekście, równolegle,
-   │                  nie widząc innych  (zapobiega konformizmowi)
-   3. Anonimizacja    odpowiedzi P1..Pn (bez nazw, bez order-bias)
-   4. Chairman        jeden werdykt: rekomendacja + gdzie się różnili (dissent)
-                      + „czego nie wiemy" + następny ruch
-```
+1. **Dobór panelu.** „Przewodniczący" czyta Twoje pytanie i dobiera 3–6 doradców pasujących właśnie do
+   niego (np. architekt, sceptyk, specjalista od danych). Zawsze jest ktoś, kto gra adwokata diabła.
+2. **Niezależne opinie.** Każdy doradca odpowiada osobno, **nie widząc pozostałych** — dzięki temu się
+   nie kopiują i nie podpinają pod cudze zdanie.
+3. **Bez nazwisk.** Opinie idą do podsumowania anonimowo, żeby liczył się argument, nie „kto to powiedział".
+4. **Werdykt.** Dostajesz jedną rekomendację, jasne „w czym się różnili" oraz uczciwe „czego nie wiemy"
+   i następny krok.
 
-To **pre-check dywergencyjny zasilający decyzję** — nigdy bramka merge. Decyduje człowiek.
-**Niedeterministyczne z założenia** (dywergencja to sedno); przypnij panel w Trybie B dla powtarzalności.
+To **pomoc w decyzji, nie wyrok** — ostatnie słowo zawsze masz Ty.
 
-### Tryb B — niezależna bramka (routing)
+### Dwa tryby
 
-Gdy decyzja wymaga *prawdziwej niezależności rodziny modeli*, konsylium subagentów jednego dostawcy nie
-jest niezależne. Tryb B routuje pytanie do narzędzia konsensusu cross-model (np.
-skill konsensusu wielomodelowego, albo
-[`llm-consortium`](https://github.com/irthomasthomas/llm-consortium)), pinując arbitra do innej rodziny,
-żeby *ewaluator ≠ generator*. Bramka jest **upstream do**, nie zamiast, decyzji człowieka.
+- **Zwykły (doradczy)** — domyślny. Kilka opinii w jednej sesji, szybko. Do większości decyzji.
+- **Dla ważnych/nieodwracalnych** — gdy chcesz naprawdę niezależnej kontroli, konsylium przekazuje
+  pytanie do narzędzia, które pyta modele AI **różnych firm** (nie tylko jednej). Panel z jednego
+  dostawcy to nie to samo co opinia niezależnej, innej firmy.
 
-## Kiedy używać
+## Kiedy to pomaga (a kiedy nie)
 
-- decyzja trudna do odwrócenia; kontrakt / interfejs / inwariant; bezpieczeństwo lub koszt,
-- wybór z 2–3 alternatyw, gdy odpowiedź nie jest oczywista,
-- masz jedną opcję i chcesz ją zaatakować (steelman opozycji),
-- przed design doc / ADR — dywergencja zanim zamkniesz,
-- model krąży w kółko (powtarzane propozycje, nieudane próby).
+**Sięgnij po nie, gdy:**
+- decyzja jest trudna do cofnięcia albo dużo kosztuje,
+- wybierasz między 2–3 opcjami i nie jest oczywiste,
+- masz pomysł i chcesz, żeby ktoś go uczciwie podważył,
+- piszesz ważny dokument/plan i chcesz różnych spojrzeń, zanim go zamkniesz.
 
-**Pomiń** dla pytań trywialnych/faktograficznych i czystej egzekucji — to tylko spali tokeny.
+**Odpuść** przy prostych, oczywistych pytaniach — wtedy jedna odpowiedź w zupełności wystarczy.
 
 ## Instalacja
 
-**Wymagania:** Claude Code lub Codex CLI (albo aplikacja Claude). Model-agnostyczne — używa tego, czym
-skonfigurowane jest Twoje CLI. W repo dwie edycje: angielska (`skills/konsylium/`) i polska
-(`skills/konsylium-pl/`); obie rejestrują komendę `/konsylium`.
+**Czego potrzebujesz:** Claude Code lub Codex (albo aplikacja Claude). W repozytorium są dwie wersje
+językowe — angielska i polska; obie dają komendę `/konsylium`.
 
 ```sh
-sh install.sh --dry-run --lang pl   # podgląd, niczego nie zapisuje
-sh install.sh --lang pl             # edycja polska → Claude Code + Codex
+sh install.sh --dry-run --lang pl   # podgląd — niczego nie zapisuje
+sh install.sh --lang pl             # instalacja (polski) do Claude Code + Codex
 ```
 
-Istniejąca instalacja jest backupowana, nigdy po cichu nadpisywana. Nowa sesja → `/konsylium`.
+Stara instalacja jest zapisywana w kopii zapasowej, nigdy po cichu nadpisywana. Potem zacznij nową sesję.
 
 <details>
-<summary><b>Codex, aplikacja desktop, edycja angielska</b></summary>
+<summary><b>Codex, aplikacja desktop, wersja angielska</b></summary>
 
-- **Edycja angielska:** `sh install.sh`
-- **Tylko jedno narzędzie:** `--claude-only` lub `--codex-only`
-- **Aplikacja Claude / Cowork** (importuje ZIP, nie czyta tamtych folderów):
+- **Wersja angielska:** `sh install.sh`
+- **Tylko jedno narzędzie:** dopisz `--claude-only` lub `--codex-only`
+- **Aplikacja Claude / Cowork** (wczytuje plik ZIP, nie czyta folderów):
   Customize → Skills → **„+" → Create skill** → wgraj `dist/konsylium-pl.zip` (lub `-en`) → włącz **ON**.
 
 </details>
 
-## Jak wpasowuje się w narzędzia
+## Możesz też z terminala
 
-- To **Skill** (instrukcje Markdown, które Claude wykonuje), **nie serwer MCP** — żadnego demona,
-  transportu, niczego do uruchomienia. Trigger `/konsylium` to własne wywołanie skilla.
-- Każda persona działa we **własnym izolowanym kontekście subagenta**; do głównego wątku wraca tylko
-  finalna synteza — Twój kontekst zostaje czysty.
-- **Skille nie synchronizują się między powierzchniami.** Claude Code, Codex i aplikacja to trzy
-  niezależne kopie; aktualizacja = reinstalacja (lub ponowny import ZIP) na każdej powierzchni.
-
-## Użycie z CLI
+Nie musisz być w czacie — zadziała też jedną linijką (przydatne do automatyzacji, np. w CI):
 
 ```sh
-claude -p "/konsylium czy trzymać dane oferentów w tej samej tabeli co scoring?"
-codex exec "użyj skilla konsylium: monolit czy mikroserwisy dla 3-osobowego zespołu?"
+claude -p "/konsylium czy zacząć od jednej tabeli czy rozdzielić dane?"
+codex exec "użyj skilla konsylium: monolit czy mikroserwisy dla małego zespołu?"
 ```
 
-- **Skryptowalne** — wepnij konsylium w CI, hook pre-commit albo cron.
-- **Zimny, świeży kontekst** — run headless nie jest skażony bieżącym czatem.
-- **Równolegle i szybko** — persony lecą współbieżnie; werdykt w ~1–2 min.
-- **Pipe’owalne** — `> werdykt.md` i wrzuć do PR, decision logu albo ADR.
+Wynik możesz zapisać do pliku (`> werdykt.md`) i wkleić do notatek, opisu zmiany czy dokumentu decyzji.
 
-## Granica danych i prywatność
+## Prywatność i bezpieczeństwo
 
-- **Skill nie wykonuje połączeń sieciowych i nie ma własnej telemetrii** — to czysty Markdown; jedyny
-  wykonywalny element to `install.sh` (`sh`/`cp`/`sed`, lokalnie).
-- Jedyna ścieżka „na zewnątrz" to *Ty* pozwalający agentowi zroutować **Tryb B** do modelu w chmurze.
-- **Nigdy nie wkładaj sekretów ani danych prywatnych/wrażliwych do promptu konsylium.**
+- **Sam skill niczego nie wysyła do internetu i nie zbiera żadnych danych** — to zwykłe instrukcje
+  tekstowe; jedyny skrypt (`install.sh`) tylko kopiuje pliki lokalnie.
+- Do chmury cokolwiek trafia tylko wtedy, gdy **Ty** świadomie użyjesz trybu „dla ważnych decyzji”.
+- **Nie wklejaj haseł ani danych wrażliwych** do pytania.
 
-Model zagrożeń i zgłaszanie → [SECURITY.md](SECURITY.md).
+Szczegóły i zgłaszanie problemów → [SECURITY.md](SECURITY.md).
 
-## Uczciwe ograniczenia
+## Szczerze: czego to NIE robi
 
-- **Model-mediated, nie deterministyczne.** Skill *instruuje* blind parallel dispatch, ale go twardo nie
-  wymusza. To samo pytanie da różne panele — w trybie dywergencji to cecha. Przypnij w Trybie B.
-- **Brak wbudowanego pomiaru różnorodności.** Persony mogą *brzmieć* różnie, a *myśleć* podobnie;
-  guardrail „inny tryb porażki" to ogranicza, ale nie mierzy.
-- **Wielorundowa debata nie pomaga — a szkodzi.** Badania
-  ([Should we be going MAD?](https://arxiv.org/abs/2311.17371) + prace o konformizmie) pokazują, że
-  więcej rund nie bije self-consistency i potrafi odwrócić poprawne odpowiedzi. Dlatego konsylium robi
-  1 blind pass + 1 syntezę — bez rund.
-- **Koszt.** Run powołuje 3–6 subagentów — taniej niż zbudować złą rzecz, drożej niż jednolinijkowa
-  odpowiedź. Rezerwuj dla decyzji, które mają znaczenie.
+Bez obiecywania cudów:
 
-## Dowody i roadmapa
+- **To pomoc w myśleniu, nie wyrocznia.** Przy prostym pytaniu nie używaj — jedna odpowiedź wystarczy.
+- **To samo pytanie może dać trochę inny skład doradców i inną odpowiedź.** W trybie zwykłym to celowe
+  (chodzi o różne spojrzenia). Jak potrzebujesz powtarzalności — użyj trybu „dla ważnych decyzji”.
+- **Doradcy mogą brzmieć różnie, a myśleć podobnie.** Pilnujemy, żeby każdy patrzył pod innym kątem,
+  ale tego nie mierzymy.
+- **Kosztuje trochę więcej niż jedno pytanie** (uruchamia kilka opinii naraz). Używaj do decyzji, które
+  mają znaczenie — i tak taniej niż zbudować złą rzecz.
+- **Bez kłótni w kółko.** Z badań wynika, że zmuszanie AI do wielu rund dyskusji nie poprawia jakości
+  (a czasem psuje), więc robimy jedną rundę.
 
-Pierwszy **[eval head-to-head](EVALS.md)** zestawia konsylium z odpowiedziami single-pass na 5 realnych
-decyzjach — i raportuje to uczciwie: wyraźnie pomogło raz, umiarkowanie trzy razy i **wcale raz** (proste,
-ograniczone pytania nie potrzebują panelu). [Przykłady](examples/) to ilustracyjne pojedyncze runy, nie
-benchmark. Traktuj konsylium jako ustrukturyzowaną dywergencję, nie wyrocznię. Rozszerzenie evala o własne
-decyzje (jako PR) to roadmapa.
+## Czy to naprawdę działa?
 
-## Prior art
+Nie obiecuję, że zawsze. Zrobiłem mały, uczciwy test na **5 realnych decyzjach**: wyraźnie pomogło
+**raz**, średnio **trzy razy**, a **raz wcale** (proste pytania nie potrzebują panelu). Szczegóły:
+[EVALS.md](EVALS.md). Traktuj to jako sposób na szersze spojrzenie, nie nieomylną wyrocznię.
+
+## Na czym bazuje (podziękowania)
+
+Pomysł „panelu AI” nie jest nowy — ukłon w stronę:
+[karpathy/llm-council](https://github.com/karpathy/llm-council),
+[council-review](https://github.com/ngmeyer/council-review),
+[council-of-high-intelligence](https://github.com/0xNyk/council-of-high-intelligence),
+[llm-consortium](https://github.com/irthomasthomas/llm-consortium),
+[Agent Skills](https://github.com/anthropics/skills) Anthropic.
+
+Co konsylium dokłada od siebie: **panel dobierany pod pytanie** (nie sztywna lista), **działanie w kilku
+narzędziach z jednej paczki**, i jasny podział na **„doradzanie” a „niezależną kontrolę”**. Konkretne
+zapożyczone pomysły i ich licencje: [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 <details>
-<summary>konsylium stoi na zdrowym, zatłoczonym ekosystemie — należny kredyt</summary>
+<summary><b>Dla technicznie zainteresowanych</b></summary>
 
-[karpathy/llm-council](https://github.com/karpathy/llm-council) ·
-[council-review](https://github.com/ngmeyer/council-review) ·
-[council-of-high-intelligence](https://github.com/0xNyk/council-of-high-intelligence) ·
-[llm-consortium](https://github.com/irthomasthomas/llm-consortium) ·
-[Agent Skills](https://github.com/anthropics/skills) Anthropic. Konkretne zapożyczone idee (z licencjami) są w [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
-
-Wyróżniki tutaj to **adaptacyjny Marszałek**, **pakowanie cross-tool** i jawny rozdział
-**doradczy-vs-bramka**.
+- To **skill** (instrukcja w Markdown, którą wykonuje AI) — nie serwer, nic nie trzeba uruchamiać ani utrzymywać.
+- Każdy doradca działa w **osobnym, czystym kontekście**; do głównej rozmowy wraca tylko podsumowanie.
+- Skille **nie synchronizują się** między narzędziami — w każdym (Claude Code, Codex, aplikacja) instalujesz osobno.
+- Tryb „dla ważnych decyzji” kieruje pytanie do narzędzia konsensusu wielomodelowego (np.
+  [`llm-consortium`](https://github.com/irthomasthomas/llm-consortium)), tak by oceniał inny model niż ten,
+  który generował — i to zawsze przed, nie zamiast, decyzji człowieka.
 
 </details>
 
-## Kontrybucje, changelog, licencja
+## Współtworzenie i licencja
 
-PR-y mile widziane — patrz [CONTRIBUTING.md](CONTRIBUTING.md) (jedna ważna zasada: **trzymaj edycje EN
-i PL w parytecie**; CI tego pilnuje). Historia w [CHANGELOG.md](CHANGELOG.md).
+PR-y mile widziane — patrz [CONTRIBUTING.md](CONTRIBUTING.md). Historia zmian: [CHANGELOG.md](CHANGELOG.md).
 
-MIT © 2026 Michał Witczak.
+MIT © 2026 Michał Witczak. Korzystaj śmiało.
