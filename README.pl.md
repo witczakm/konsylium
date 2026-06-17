@@ -36,7 +36,8 @@ Skill dla **Claude Code**, **Codex** i **aplikacji Claude** — kilku doradców 
 ## Szybki start
 
 ```sh
-git clone https://github.com/witczakm/konsylium.git && cd konsylium && sh install.sh --lang pl
+git clone https://github.com/witczakm/konsylium.git && cd konsylium
+sh install.sh --lang pl        # podgląd bez zmian: dopisz --dry-run
 ```
 
 Potem w **nowej sesji Claude Code** zadaj realne pytanie, np.:
@@ -49,7 +50,7 @@ Potem w **nowej sesji Claude Code** zadaj realne pytanie, np.:
 
 …albo cokolwiek własnego: `/konsylium <Twoja decyzja>`.
 
-Dostajesz: jedną rekomendację, jasne „w czym doradcy się różnili" i uczciwe „czego jeszcze nie wiadomo".
+Dostajesz: jedną rekomendację, jasne „w czym doradcy się różnili” i uczciwe „czego jeszcze nie wiadomo”.
 Instalację w Codex i aplikacji opisuję niżej.
 
 ## Zobacz przykład
@@ -58,12 +59,12 @@ Ktoś zapytał, jak zaprojektować bazę danych (gdzie trzymać dane klientów).
 konsylium samo dobrało doradców od **prywatności, zgodności z prawem i porządku w danych** — i dwóch
 z nich niezależnie złapało rzecz, którą zwykła odpowiedź by pominęła:
 
-> **Rekomendacja:** rozdziel dane na osobne tabele i zapisz „migawkę" danych z chwili oceny — bo
+> **Rekomendacja:** rozdziel dane na osobne tabele i zapisz „migawkę” danych z chwili oceny — bo
 > późniejsza poprawka nazwy nie może zmienić historii wcześniejszej decyzji.
 > **W czym się różnili:** jeden doradca dopuścił prostsze rozwiązanie na start; inny ostro je podważył.
 > **Czego nie wiemy:** czy to dane osób fizycznych (wtedy wchodzi RODO)…
 
-Pełny werdykt i trzy inne decyzje → **[examples/](examples/)** (po angielsku).
+Pełny werdykt i trzy inne decyzje → **[examples/](examples/)** (na razie po angielsku).
 
 ## Po co to?
 
@@ -74,14 +75,34 @@ się w nie wpakujesz.
 
 ## Jak to działa
 
-Cztery proste kroki, po ludzku:
+Rytm jest prosty — jedno pytanie **rozchodzi się** na kilku niezależnych doradców i **schodzi z powrotem**
+w jeden werdykt:
 
-1. **Dobór panelu.** „Przewodniczący" czyta Twoje pytanie i dobiera 3–6 doradców pasujących właśnie do
+```
+              Twoje pytanie
+                    │
+              Przewodniczący          → dobiera 3–6 doradców pod pytanie
+                    │
+        ┌─────┬─────┼─────┬─────┐     ↓ ROZEJŚCIE — każdy osobno (blind),
+        ▼     ▼     ▼     ▼     ▼        w osobnym, czystym kontekście
+     architekt sceptyk dane koszt …
+        └─────┴─────┼─────┴─────┘     ↑ ZEJŚCIE — synteza, bez nazwisk
+                    ▼
+              Werdykt
+     rekomendacja · w czym się różnili · czego nie wiemy
+                    │
+                    ▼
+              Ty decydujesz
+```
+
+Krok po kroku:
+
+1. **Dobór panelu.** „Przewodniczący” czyta Twoje pytanie i dobiera 3–6 doradców pasujących właśnie do
    niego (np. architekt, sceptyk, specjalista od danych). Zawsze jest ktoś, kto gra adwokata diabła.
 2. **Niezależne opinie.** Każdy doradca odpowiada osobno, **nie widząc pozostałych** — dzięki temu się
    nie kopiują i nie podpinają pod cudze zdanie.
-3. **Bez nazwisk.** Opinie idą do podsumowania anonimowo, żeby liczył się argument, nie „kto to powiedział".
-4. **Werdykt.** Dostajesz jedną rekomendację, jasne „w czym się różnili" oraz uczciwe „czego nie wiemy"
+3. **Bez nazwisk.** Opinie idą do podsumowania anonimowo, żeby liczył się argument, nie „kto to powiedział”.
+4. **Werdykt.** Dostajesz jedną rekomendację, jasne „w czym się różnili” oraz uczciwe „czego nie wiemy”
    i następny krok.
 
 To **pomoc w decyzji, nie wyrok** — ostatnie słowo zawsze masz Ty.
@@ -121,7 +142,7 @@ Stara instalacja jest zapisywana w kopii zapasowej, nigdy po cichu nadpisywana. 
 - **Wersja angielska:** `sh install.sh`
 - **Tylko jedno narzędzie:** dopisz `--claude-only` lub `--codex-only`
 - **Aplikacja Claude / Cowork** (wczytuje plik ZIP, nie czyta folderów):
-  Customize → Skills → **„+" → Create skill** → wgraj `dist/konsylium-pl.zip` (lub `-en`) → włącz **ON**.
+  Customize → Skills → **„+” → Create skill** → wgraj `dist/konsylium-pl.zip` (lub `-en`) → włącz **ON**.
 
 </details>
 
@@ -150,8 +171,8 @@ Szczegóły i zgłaszanie problemów → [SECURITY.md](SECURITY.md).
 Bez obiecywania cudów:
 
 - **To pomoc w myśleniu, nie wyrocznia.** Przy prostym pytaniu nie używaj — jedna odpowiedź wystarczy.
-- **To samo pytanie może dać trochę inny skład doradców i inną odpowiedź.** W trybie zwykłym to celowe
-  (chodzi o różne spojrzenia). Jak potrzebujesz powtarzalności — użyj trybu „dla ważnych decyzji”.
+- **To samo pytanie może dać trochę inny skład doradców i inną odpowiedź.** W trybie zwykłym to celowe —
+  chodzi o różne spojrzenia (potrzebujesz powtarzalności? → tryb dla ważnych decyzji).
 - **Doradcy mogą brzmieć różnie, a myśleć podobnie.** Pilnujemy, żeby każdy patrzył pod innym kątem,
   ale tego nie mierzymy.
 - **Kosztuje trochę więcej niż jedno pytanie** (uruchamia kilka opinii naraz). Używaj do decyzji, które
@@ -161,8 +182,8 @@ Bez obiecywania cudów:
 
 ## Czy to naprawdę działa?
 
-Nie obiecuję, że zawsze. Zrobiłem mały, uczciwy test na **5 realnych decyzjach**: wyraźnie pomogło
-**raz**, średnio **trzy razy**, a **raz wcale** (proste pytania nie potrzebują panelu). Szczegóły:
+Nie obiecuję, że zawsze. Zrobiłem mały, uczciwy test na **5 realnych decyzjach**: pomogło w **4**
+(raz wyraźnie, trzy razy średnio), a **raz wcale** (proste pytania nie potrzebują panelu). Szczegóły:
 [EVALS.md](EVALS.md). Traktuj to jako sposób na szersze spojrzenie, nie nieomylną wyrocznię.
 
 ## Na czym bazuje (podziękowania)

@@ -36,7 +36,8 @@ A skill for **Claude Code**, **Codex**, and the **Claude app** — a few AI advi
 ## Quick start
 
 ```sh
-git clone https://github.com/witczakm/konsylium.git && cd konsylium && sh install.sh
+git clone https://github.com/witczakm/konsylium.git && cd konsylium
+sh install.sh                  # preview without changes: add --dry-run
 ```
 
 Then, in a **new Claude Code session**, ask a real question — e.g.:
@@ -73,7 +74,27 @@ answers together? konsylium does it in one command — and flags the weak spots 
 
 ## How it works
 
-Four simple steps, in plain terms:
+The rhythm is simple — one question **fans out** to several independent advisors and **comes back** as a
+single verdict:
+
+```
+              Your question
+                    │
+                  Chair               → picks 3–6 advisors to fit the question
+                    │
+        ┌─────┬─────┼─────┬─────┐     ↓ FAN-OUT — each one alone (blind),
+        ▼     ▼     ▼     ▼     ▼        in its own clean context
+     architect skeptic data cost …
+        └─────┴─────┼─────┴─────┘     ↑ FAN-IN — synthesis, no names
+                    ▼
+              Verdict
+     recommendation · where they differed · what we don't know
+                    │
+                    ▼
+              You decide
+```
+
+Step by step:
 
 1. **Pick the panel.** A "chair" reads your question and assembles 3–6 advisors that actually fit it
    (e.g. an architect, a skeptic, a data specialist). There's always someone playing devil's advocate.
@@ -149,8 +170,8 @@ Details and how to report issues → [SECURITY.md](SECURITY.md).
 No miracle claims:
 
 - **It's a thinking aid, not an oracle.** For a simple question, don't use it — one answer is enough.
-- **The same question can give a slightly different panel and a different answer.** In the regular mode
-  that's on purpose (the point is varied angles). If you need repeatability, use the "important decisions" mode.
+- **The same question can give a slightly different panel and a different answer.** In regular mode that's
+  on purpose — the point is varied angles (need repeatability? → the important-decisions mode).
 - **Advisors can sound different yet think alike.** We make sure each looks from a different angle, but
   we don't measure that.
 - **It costs a bit more than one question** (it runs several opinions at once). Use it for decisions that
@@ -160,8 +181,8 @@ No miracle claims:
 
 ## Does it actually work?
 
-No promises that it always does. I ran a small, honest test on **5 real decisions**: it clearly helped
-**once**, moderately **three times**, and **not at all once** (simple questions don't need a panel).
+No promises that it always does. I ran a small, honest test on **5 real decisions**: it helped in **4**
+(clearly once, moderately three times) and **not at all once** (simple questions don't need a panel).
 Details: [EVALS.md](EVALS.md). Treat it as a way to get a broader view, not an infallible oracle.
 
 ## What it builds on (credits)
