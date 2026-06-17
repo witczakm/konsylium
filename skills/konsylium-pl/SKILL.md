@@ -1,6 +1,14 @@
 ---
 name: konsylium
-description: Wewnętrzne konsylium AI z wielu perspektyw. Meta-krok „Marszałek" czyta treść pytania i dobiera panel 3–6 person (architekt, sceptyk/red-team, pragmatyk + persony domenowe: bezpieczeństwo, integralność danych, koszt, wydajność), pyta każdą niezależnie (blind), a potem syntezuje jeden werdykt z zachowanym dissentem i sekcją „czego nie wiemy". Użyj przy nietrywialnej lub trudnej do odwrócenia decyzji, wyborze z 2–3 alternatyw, stress-teście opcji, do której się skłaniasz, przy pisaniu design doc/ADR, albo gdy model krąży w kółko. To PRE-CHECK dywergencyjny, który zasila decyzję — nigdy bramka merge (decyduje człowiek). Dla prawdziwie niezależnej bramki cross-model routuje do narzędzia konsensusu wielomodelowego, zamiast udawać niezależność jednym dostawcą.
+description: >-
+  Wewnętrzne konsylium AI z wielu perspektyw. Meta-krok „Marszałek" czyta treść pytania i dobiera
+  panel 3–6 person (architekt, sceptyk/red-team, pragmatyk + persony domenowe: bezpieczeństwo,
+  integralność danych, koszt, wydajność), pyta każdą niezależnie (blind), a potem syntezuje jeden
+  werdykt z zachowanym dissentem i sekcją „czego nie wiemy". Użyj przy nietrywialnej lub trudnej do
+  odwrócenia decyzji, wyborze z 2–3 alternatyw, stress-teście opcji, do której się skłaniasz, przy
+  pisaniu design doc/ADR, albo gdy model krąży w kółko. To PRE-CHECK dywergencyjny, który zasila
+  decyzję — nigdy bramka merge (decyduje człowiek). Dla prawdziwie niezależnej bramki cross-model
+  routuje do narzędzia konsensusu wielomodelowego, zamiast udawać niezależność jednym dostawcą.
 ---
 
 # /konsylium — wewnętrzne konsylium AI z wielu perspektyw

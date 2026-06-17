@@ -9,8 +9,7 @@ tagged release; older tags do not receive backports.
 
 Please report privately — do not open a public issue for a security problem.
 
-- Preferred: open a [GitHub Security Advisory](https://github.com/witczakm/konsylium/security/advisories/new).
-- Alternatively, email `<security contact>`.
+- Open a private [GitHub Security Advisory](https://github.com/witczakm/konsylium/security/advisories/new) — it notifies the maintainer directly without a public issue.
 
 Include what you found, how to reproduce it, and the impact you expect. We aim to
 acknowledge within a few days and will credit you in the fix unless you prefer otherwise.

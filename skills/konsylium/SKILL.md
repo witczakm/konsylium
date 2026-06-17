@@ -1,6 +1,15 @@
 ---
 name: konsylium
-description: Internal AI council of many perspectives. A "Marshal" meta-step reads the question and assembles a 3–6 persona panel (architect, skeptic/red-team, pragmatist, plus domain personas like security, data-integrity, cost, performance), queries each independently (blind), then synthesizes one verdict that preserves dissent and an explicit "what we don't know" section. Use when facing a non-trivial or hard-to-reverse decision, choosing between 2–3 alternatives, stress-testing a single option you already lean toward, writing a design doc/ADR, or when the model keeps circling. It is a divergence PRE-CHECK that feeds your decision — never the merge gate (a human decides). For a genuinely independent cross-model gate it routes to a multi-model consensus tool instead of faking independence with one provider.
+description: >-
+  Internal AI council of many perspectives. A "Marshal" meta-step reads the question and
+  assembles a 3–6 persona panel (architect, skeptic/red-team, pragmatist, plus domain personas
+  like security, data-integrity, cost, performance), queries each independently (blind), then
+  synthesizes one verdict that preserves dissent and an explicit "what we don't know" section.
+  Use when facing a non-trivial or hard-to-reverse decision, choosing between 2–3 alternatives,
+  stress-testing a single option you already lean toward, writing a design doc/ADR, or when the
+  model keeps circling. It is a divergence PRE-CHECK that feeds your decision — never the merge
+  gate (a human decides). For a genuinely independent cross-model gate it routes to a multi-model
+  consensus tool instead of faking independence with one provider.
 ---
 
 # /konsylium — internal AI council of many perspectives

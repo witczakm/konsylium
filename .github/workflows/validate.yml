@@ -35,6 +35,21 @@ jobs:
           [ "$fail" -eq 0 ] || { echo "Frontmatter check failed."; exit 1; }
           echo "Frontmatter OK (EN + PL)."
 
+      - name: Frontmatter parses as strict YAML (EN + PL)
+        run: |
+          set -euo pipefail
+          for skill in skills/konsylium/SKILL.md skills/konsylium-pl/SKILL.md; do
+            awk 'NR==1 && $0=="---"{f=1; next} f && $0=="---"{exit} f{print}' "$skill" \
+              | ruby -ryaml -e '
+                  d = YAML.safe_load(STDIN.read)
+                  abort "not a mapping"       unless d.is_a?(Hash)
+                  abort "missing name"        if d["name"].to_s.strip.empty?
+                  abort "missing description" if d["description"].to_s.strip.empty?
+                ' \
+              || { echo "Strict-YAML frontmatter check FAILED for $skill"; exit 1; }
+            echo "Strict-YAML OK: $skill"
+          done
+
       - name: EN/PL edition parity (no drift between language copies)
         run: |
           set -euo pipefail
@@ -72,6 +87,25 @@ jobs:
         run: |
           set -euo pipefail
           shellcheck install.sh
+
+      - name: dist/ import zips match skills/ (no drift)
+        run: |
+          set -euo pipefail
+          check() {
+            zip="$1"; src="$2"
+            [ -f "$zip" ] || { echo "MISSING zip: $zip"; exit 1; }
+            tmp=$(mktemp -d)
+            unzip -q "$zip" -d "$tmp"
+            if ! diff -r "$tmp/konsylium" "$src" > /tmp/distdiff 2>&1; then
+              echo "DRIFT: $zip differs from committed $src — rebuild it (see CONTRIBUTING.md):"
+              cat /tmp/distdiff
+              exit 1
+            fi
+            rm -rf "$tmp"
+            echo "OK (no drift): $zip == $src"
+          }
+          check dist/konsylium-en.zip skills/konsylium
+          check dist/konsylium-pl.zip skills/konsylium-pl
 
       - name: All checks passed
         run: echo "All checks passed"
