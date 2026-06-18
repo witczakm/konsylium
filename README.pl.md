@@ -1,17 +1,16 @@
-# konsylium — kilka opinii AI zamiast jednej
+# konsylium
 
-> Jeden model AI zawsze brzmi pewnie — ale pewność to nie to samo co racja. konsylium zwołuje **panel
-> doradców**, którzy patrzą na Twoją decyzję z różnych stron, oceniają ją niezależnie i pokazują Ci nie
-> tylko werdykt, ale i to, w czym się nie zgodzili.
+> **Panel doradców AI zamiast jednej pewnej siebie odpowiedzi.** Jedna komenda zwołuje 3–6 doradców, którzy niezależnie oceniają Twoją decyzję z różnych stron — i oddają jeden werdykt z jasnym „w czym się różnili" oraz „czego jeszcze nie wiadomo".
+>
+> *Wieloperspektywiczne konsylium AI dla Claude Code, Codex i aplikacji Claude. Jedna komenda · panel w ślepo · uczciwy dissent — pre-check, nie bramka.*
+>
+> 🇬🇧 [English version](README.md)
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-d97757)
 ![Codex](https://img.shields.io/badge/Codex-skill-111111)
 ![Claude app](https://img.shields.io/badge/Claude%20app-skill-8a63d2)
-
-Skill dla **Claude Code**, **Codex** i **aplikacji Claude** — kilku doradców AI zamiast jednego.
-🇵🇱 polski · 🇬🇧 [English README](README.md)
 
 ![konsylium — przykład działania](assets/konsylium-demo.svg)
 
@@ -22,7 +21,7 @@ Skill dla **Claude Code**, **Codex** i **aplikacji Claude** — kilku doradców 
 - [Zobacz przykład](#zobacz-przykład)
 - [Po co to?](#po-co-to)
 - [Jak to działa](#jak-to-działa)
-- [Kiedy to pomaga (a kiedy nie)](#kiedy-to-pomaga-a-kiedy-nie)
+- [Czy to dla Ciebie?](#czy-to-dla-ciebie)
 - [Instalacja](#instalacja)
 - [Możesz też z terminala](#możesz-też-z-terminala)
 - [Prywatność i bezpieczeństwo](#prywatność-i-bezpieczeństwo)
@@ -50,7 +49,17 @@ Potem w **nowej sesji Claude Code** zadaj realne pytanie, np.:
 
 …albo cokolwiek własnego: `/konsylium <Twoja decyzja>`.
 
-Dostajesz: jedną rekomendację, jasne „w czym doradcy się różnili” i uczciwe „czego jeszcze nie wiadomo”.
+Dostajesz jeden werdykt w stałym formacie:
+
+```text
+Rekomendacja: monolit — jeden zespół, jeden deploy; mikroserwisy dokładają
+  koszt operacyjny, którego teraz nie odkupisz.
+W czym się różnili: Architekt vs Pragmatyk — granice modułów (napięcie
+  wartości, nie błąd).
+Czego nie wiemy: [DO SPRAWDZENIA] przewidywany ruch i cele SLA.
+Następny ruch: zapisz jako ADR; jeśli decyzja nieodwracalna → Tryb B.
+```
+
 Instalację w Codex i aplikacji opisuję niżej.
 
 ## Zobacz przykład
@@ -109,20 +118,18 @@ To **pomoc w decyzji, nie wyrok** — ostatnie słowo zawsze masz Ty.
 
 ### Dwa tryby
 
-- **Zwykły (doradczy)** — domyślny. Kilka opinii w jednej sesji, szybko. Do większości decyzji.
-- **Dla ważnych/nieodwracalnych** — gdy chcesz naprawdę niezależnej kontroli, konsylium przekazuje
-  pytanie do narzędzia, które pyta modele AI **różnych firm** (nie tylko jednej). Panel z jednego
-  dostawcy to nie to samo co opinia niezależnej, innej firmy.
+| Tryb | Kiedy | Co dostajesz |
+|------|-------|--------------|
+| **A — doradczy** (domyślny) | większość decyzji | 3–6 doradców w jednej sesji, blind, jeden werdykt — szybko |
+| **B — bramka** | ważne / nieodwracalne | routing do modeli AI **różnych firm** dla prawdziwej niezależności |
 
-## Kiedy to pomaga (a kiedy nie)
+Panel z jednego dostawcy to nie to samo co opinia niezależnej, innej firmy — dlatego decyzje wysokiego ryzyka eskalują do Trybu B.
 
-**Sięgnij po nie, gdy:**
-- decyzja jest trudna do cofnięcia albo dużo kosztuje,
-- wybierasz między 2–3 opcjami i nie jest oczywiste,
-- masz pomysł i chcesz, żeby ktoś go uczciwie podważył,
-- piszesz ważny dokument/plan i chcesz różnych spojrzeń, zanim go zamkniesz.
+## Czy to dla Ciebie?
 
-**Odpuść** przy prostych, oczywistych pytaniach — wtedy jedna odpowiedź w zupełności wystarczy.
+✅ **Tak**, jeśli: decyzja jest trudna do cofnięcia albo kosztowna · wybierasz z 2–3 opcji i nie jest oczywiste · masz pomysł i chcesz, żeby ktoś go uczciwie podważył · zamykasz ważny dokument/plan i chcesz wcześniej innych spojrzeń.
+
+❌ **Raczej nie**, jeśli: pytanie jest proste i oczywiste — jedna odpowiedź w zupełności wystarczy.
 
 ## Instalacja
 

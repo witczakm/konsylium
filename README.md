@@ -1,17 +1,16 @@
-# konsylium — a few AI opinions instead of one
+# konsylium
 
-> Every AI model sounds confident — but confidence isn't the same as being right. konsylium convenes a
-> **panel of advisors** who look at your decision from different angles, judge it independently, and show
-> you not just a verdict but exactly where they disagreed.
+> **A panel of AI advisors instead of one confident answer.** One command convenes 3–6 advisors who judge your decision from different angles — independently — then return a single verdict that shows exactly where they disagreed and what's still unknown.
+>
+> *Multi-perspective AI council for Claude Code, Codex & the Claude app. One command · blind panel · honest dissent — a pre-check, never a gate.*
+>
+> 🇵🇱 [Wersja polska](README.pl.md)
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-d97757)
 ![Codex](https://img.shields.io/badge/Codex-skill-111111)
 ![Claude app](https://img.shields.io/badge/Claude%20app-skill-8a63d2)
-
-A skill for **Claude Code**, **Codex**, and the **Claude app** — a few AI advisors instead of one.
-🇬🇧 English · 🇵🇱 [polski README](README.pl.md)
 
 ![konsylium — how it works](assets/konsylium-demo.svg)
 
@@ -22,7 +21,7 @@ A skill for **Claude Code**, **Codex**, and the **Claude app** — a few AI advi
 - [See an example](#see-an-example)
 - [Why?](#why)
 - [How it works](#how-it-works)
-- [When it helps (and when it doesn't)](#when-it-helps-and-when-it-doesnt)
+- [Is this for you?](#is-this-for-you)
 - [Install](#install)
 - [Also from the terminal](#also-from-the-terminal)
 - [Privacy & safety](#privacy--safety)
@@ -50,8 +49,18 @@ Then, in a **new Claude Code session**, ask a real question — e.g.:
 
 …or anything of your own: `/konsylium <your decision>`.
 
-You get: one recommendation, a clear "where the advisors disagreed", and an honest "what we still don't
-know". Codex and the desktop app are covered below.
+You get one verdict in a fixed shape:
+
+```text
+Recommendation: monolith — one team, one deploy; microservices add operational
+  cost you won't earn back yet.
+Where they differed: Architect vs Pragmatist — module boundaries (a value
+  tension, not an error).
+What we don't know: [TO CHECK] projected traffic and SLA targets.
+Next step: record it as an ADR; if the call is irreversible → Mode B.
+```
+
+Codex and the desktop app are covered below.
 
 ## See an example
 
@@ -108,20 +117,18 @@ It's **a decision aid, not a verdict** — the final call is always yours.
 
 ### Two modes
 
-- **Regular (advisory)** — the default. A few opinions in one session, fast. For most decisions.
-- **For important / irreversible calls** — when you want genuinely independent scrutiny, konsylium hands
-  the question to a tool that asks AI models from **different vendors** (not just one). A panel from a
-  single provider isn't the same as a second opinion from an independent one.
+| Mode | When | What you get |
+|------|------|--------------|
+| **A — advisory** (default) | most decisions | 3–6 advisors in one session, blind, one verdict — fast |
+| **B — gate** | important / irreversible | routes to AI models from **different vendors** for genuine independence |
 
-## When it helps (and when it doesn't)
+A panel from a single provider isn't the same as a second opinion from an independent one — so high-stakes calls escalate to Mode B.
 
-**Reach for it when:**
-- the decision is hard to reverse or costly,
-- you're choosing between 2–3 options and it isn't obvious,
-- you have an idea and want it honestly challenged,
-- you're writing an important doc/plan and want different angles before locking it.
+## Is this for you?
 
-**Skip it** for simple, obvious questions — a single answer is plenty there.
+✅ **Yes**, if: the decision is hard to reverse or costly · you're choosing between 2–3 options and it isn't obvious · you have an idea and want it honestly challenged · you're locking an important doc/plan and want other angles first.
+
+❌ **Probably not**, if: the question is simple and obvious — one answer is plenty.
 
 ## Install
 
