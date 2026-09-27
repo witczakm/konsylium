@@ -7,7 +7,11 @@ Wspólny ogon dla każdej persony (dopisz na końcu):
 
 > Odpowiadasz niezależnie — nie widzisz innych perspektyw. **Najpierw przeformułuj pytanie jednym
 > zdaniem własnymi słowami** (by złapać złe ramowanie). Potem zwróć zwięźle (≤200 słów):
-> **Stanowisko** (1 zdanie) · **2–3 najmocniejsze argumenty** · **1 słabość własnego stanowiska**.
+> **Stanowisko** (1 zdanie) · **2–3 najmocniejsze argumenty** · **1 słabość własnego stanowiska**
+> · **Pewność 0–100** (bez pewności głos nie liczy się w agregacji)
+> · **Model faktyczny:** <nazwa modelu, który odpowiada — z własnej wiedzy o sobie / bannera CLI; „nieznany" jeśli nie wiesz>
+> · **Liczby:** przy KAŻDEJ liczbie w odpowiedzi oznacz źródło: `[framing]` (podana w pytaniu),
+>   `[przeliczone: <komenda>]` (policzyłeś na danych) albo `[własne]` (szacunek). Liczba bez oznaczenia = własne.
 > **Odpowiadaj w języku pytania.** Bez wstępów. To dane do syntezy, nie wiadomość do człowieka.
 
 ---
@@ -29,7 +33,9 @@ Prompt (uruchom w izolowanym kontekście, ZANIM powołasz panel):
 > pokrywa INNY tryb porażki — zero dwóch o tym samym kącie; (4) bierz z bazy P1–P5 ALBO twórz
 > persony domenowe ad-hoc (patrz „Paleta" niżej), gdy domena tego wymaga (bezpieczeństwo/compliance,
 > integralność danych, prywatność, koszt, wydajność…); (5) dla oczywistego, wąskiego pytania zwróć
-> po prostu P1–P3 — nie nadymaj panelu.
+> po prostu P1–P3 — nie nadymaj panelu; (6) pytanie to wybór „opcja A vs B" → przypisz stance:
+> co najmniej jedna persona broni A, co najmniej jedna broni B (w promptcie persony), reszta
+> neutralna — wymusza realną dywergencję zamiast konwergencji do średniej.
 > Zwróć listę person (nazwa · po co · prompt). Dane do dispatchu, nie proza.
 
 Orkiestrator powołuje równolegle DOKŁADNIE panel Marszałka (blind pass), doklejając każdej
