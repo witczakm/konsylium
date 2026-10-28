@@ -1,10 +1,9 @@
 # konsylium
+**English** · [Polski](README.pl.md)
 
 > **A panel of AI advisors instead of one confident answer.** One command convenes 3–6 advisors who judge your decision from different angles — independently — then return a single verdict that shows exactly where they disagreed and what's still unknown.
 >
-> *Multi-perspective AI council for Claude Code, Codex & the Claude app. One command · blind panel · honest dissent — a pre-check, never a gate.*
->
-> 🇵🇱 [Wersja polska](README.pl.md)
+> *For people using Claude Code, Codex or the Claude app who face a decision that is costly to get wrong. Advisors answer without seeing each other (a **blind panel**), their disagreements stay in the verdict (**honest dissent**), and it informs your decision before you make it (a **pre-check**) — it never approves or blocks anything for you.*
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
@@ -120,7 +119,7 @@ It's **a decision aid, not a verdict** — the final call is always yours.
 | Mode | When | What you get |
 |------|------|--------------|
 | **A — advisory** (default) | most decisions | 3–6 advisors in one session, blind, one verdict — fast |
-| **B — gate** | important / irreversible | routes to AI models from **different vendors** for genuine independence |
+| **B — gate** (an independent check before you commit) | important / irreversible | routes to AI models from **different vendors** for genuine independence |
 
 A panel from a single provider isn't the same as a second opinion from an independent one — so high-stakes calls escalate to Mode B.
 
@@ -167,7 +166,8 @@ Pipe the result to a file (`> verdict.md`) and drop it into your notes, a PR des
 
 - **The skill itself sends nothing to the internet and collects no data** — it's plain text instructions;
   the only script (`install.sh`) just copies files locally.
-- Anything reaches the cloud only when **you** deliberately use the "important decisions" mode.
+- Your question goes only to the AI tool you already use; it reaches **other vendors'** models only when
+  **you** deliberately use Mode B.
 - **Don't paste secrets or sensitive data** into a question.
 
 Details and how to report issues → [SECURITY.md](SECURITY.md).
@@ -178,7 +178,7 @@ No miracle claims:
 
 - **It's a thinking aid, not an oracle.** For a simple question, don't use it — one answer is enough.
 - **The same question can give a slightly different panel and a different answer.** In regular mode that's
-  on purpose — the point is varied angles (need repeatability? → the important-decisions mode).
+  on purpose — the point is varied angles (need repeatability? → Mode B).
 - **Advisors can sound different yet think alike.** We make sure each looks from a different angle, but
   we don't measure that.
 - **It costs a bit more than one question** (it runs several opinions at once). Use it for decisions that
@@ -211,7 +211,7 @@ borrowed ideas and their licenses are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NO
 - It's a **skill** (Markdown instructions the AI runs) — not a server; nothing to launch or maintain.
 - Each advisor runs in its **own clean context**; only the summary returns to the main conversation.
 - Skills **don't sync across tools** — install separately in each (Claude Code, Codex, the app).
-- The "important decisions" mode routes the question to a multi-model consensus tool (e.g.
+- Mode B routes the question to a multi-model consensus tool (e.g.
   [`llm-consortium`](https://github.com/irthomasthomas/llm-consortium)) so a *different* model evaluates
   than the one that generated — and always before, never instead of, the human's call.
 

@@ -1,10 +1,9 @@
 # konsylium
+[English](README.md) · **Polski**
 
 > **Panel doradców AI zamiast jednej pewnej siebie odpowiedzi.** Jedna komenda zwołuje 3–6 doradców, którzy niezależnie oceniają Twoją decyzję z różnych stron — i oddają jeden werdykt z jasnym „w czym się różnili" oraz „czego jeszcze nie wiadomo".
 >
-> *Wieloperspektywiczne konsylium AI dla Claude Code, Codex i aplikacji Claude. Jedna komenda · panel w ślepo · uczciwy dissent — pre-check, nie bramka.*
->
-> 🇬🇧 [English version](README.md)
+> *Dla osób korzystających z Claude Code, Codex lub aplikacji Claude, które stoją przed decyzją kosztowną w razie pomyłki. Doradcy odpowiadają, nie widząc się nawzajem (**panel w ślepo**), ich rozbieżności zostają w werdykcie (**uczciwy dissent**, czyli zdanie odrębne), a całość informuje Twoją decyzję, zanim ją podejmiesz (**pre-check**) — niczego za Ciebie nie zatwierdza ani nie blokuje.*
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![CI](https://github.com/witczakm/konsylium/actions/workflows/validate.yml/badge.svg)
@@ -121,7 +120,7 @@ To **pomoc w decyzji, nie wyrok** — ostatnie słowo zawsze masz Ty.
 | Tryb | Kiedy | Co dostajesz |
 |------|-------|--------------|
 | **A — doradczy** (domyślny) | większość decyzji | 3–6 doradców w jednej sesji, blind, jeden werdykt — szybko |
-| **B — bramka** | ważne / nieodwracalne | routing do modeli AI **różnych firm** dla prawdziwej niezależności |
+| **B — bramka** (niezależna kontrola, zanim się zobowiążesz) | ważne / nieodwracalne | routing do modeli AI **różnych firm** dla prawdziwej niezależności |
 
 Panel z jednego dostawcy to nie to samo co opinia niezależnej, innej firmy — dlatego decyzje wysokiego ryzyka eskalują do Trybu B.
 
@@ -168,7 +167,8 @@ Wynik możesz zapisać do pliku (`> werdykt.md`) i wkleić do notatek, opisu zmi
 
 - **Sam skill niczego nie wysyła do internetu i nie zbiera żadnych danych** — to zwykłe instrukcje
   tekstowe; jedyny skrypt (`install.sh`) tylko kopiuje pliki lokalnie.
-- Do chmury cokolwiek trafia tylko wtedy, gdy **Ty** świadomie użyjesz trybu „dla ważnych decyzji”.
+- Pytanie trafia tylko do narzędzia AI, którego już używasz; do modeli **innych firm** trafia tylko wtedy,
+  gdy **Ty** świadomie użyjesz Trybu B.
 - **Nie wklejaj haseł ani danych wrażliwych** do pytania.
 
 Szczegóły i zgłaszanie problemów → [SECURITY.md](SECURITY.md).
@@ -179,7 +179,7 @@ Bez obiecywania cudów:
 
 - **To pomoc w myśleniu, nie wyrocznia.** Przy prostym pytaniu nie używaj — jedna odpowiedź wystarczy.
 - **To samo pytanie może dać trochę inny skład doradców i inną odpowiedź.** W trybie zwykłym to celowe —
-  chodzi o różne spojrzenia (potrzebujesz powtarzalności? → tryb dla ważnych decyzji).
+  chodzi o różne spojrzenia (potrzebujesz powtarzalności? → Tryb B).
 - **Doradcy mogą brzmieć różnie, a myśleć podobnie.** Pilnujemy, żeby każdy patrzył pod innym kątem,
   ale tego nie mierzymy.
 - **Kosztuje trochę więcej niż jedno pytanie** (uruchamia kilka opinii naraz). Używaj do decyzji, które
@@ -212,7 +212,7 @@ zapożyczone pomysły i ich licencje: [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTIC
 - To **skill** (instrukcja w Markdown, którą wykonuje AI) — nie serwer, nic nie trzeba uruchamiać ani utrzymywać.
 - Każdy doradca działa w **osobnym, czystym kontekście**; do głównej rozmowy wraca tylko podsumowanie.
 - Skille **nie synchronizują się** między narzędziami — w każdym (Claude Code, Codex, aplikacja) instalujesz osobno.
-- Tryb „dla ważnych decyzji” kieruje pytanie do narzędzia konsensusu wielomodelowego (np.
+- Tryb B kieruje pytanie do narzędzia konsensusu wielomodelowego (np.
   [`llm-consortium`](https://github.com/irthomasthomas/llm-consortium)), tak by oceniał inny model niż ten,
   który generował — i to zawsze przed, nie zamiast, decyzji człowieka.
 
