@@ -1,8 +1,13 @@
 # Council verdict: <topic>
 
 **Question:** <one-sentence statement of what we're deciding>
-**Personas:** <e.g. Architect, Skeptic, Pragmatist, Security> · **Mode:** A (advisory)
-**Date:** <YYYY-MM-DD>
+**Personas:** <e.g. Architect, Skeptic, Pragmatist, Security> · **Mode:** A (advisory) / B (cross-model)
+**Actual models:** <voice → model from the log, e.g. P1 claude-opus-5-5 · P2 gpt-5.4 · P3 gemini-2.5-pro; DEGRADATION: <which role lacks a second family and why>>
+**Date:** <YYYY-MM-DD HH:MM from `date`> · **Trigger:** <on request / 3rd NO round of gate <name> / ADR>
+**Numbers:** <recomputed on the data: yes (command) / n/a; mismatches: "P3 said 157, measured 215">
+**Votes** *(option choice only)*: <persona → option · confidence/100, …> · **Cross-ranking:** <P2 > P1 > P3> · **Confrontation:** <no / yes (threshold <60 % / contradicting fact)>
+**Synthesis confidence:** <high / medium / low + one sentence why>
+**Outcome after the fact:** <fill in when the decision closes: recommendation right / wrong / partly — one sentence on what; until then: [OPEN]>
 
 ---
 
