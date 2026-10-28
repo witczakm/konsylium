@@ -7,7 +7,11 @@ Common tail for every persona (append at the end):
 
 > You answer independently — you do not see other perspectives. **First, restate the question in
 > one sentence in your own words** (to catch mis-framing). Then return concisely (≤200 words):
-> **Position** (1 sentence) · **2–3 strongest arguments** · **1 weakness of your own stance**.
+> **Position** (1 sentence) · **2–3 strongest arguments** · **1 weakness of your own stance**
+> · **Confidence 0–100** (a voice without confidence does not count in the aggregation)
+> · **Actual model:** <name of the model answering — from your own knowledge of yourself / the CLI banner; "unknown" if you don't know>
+> · **Numbers:** mark the source of EVERY number in your answer: `[framing]` (given in the question),
+>   `[recomputed: <command>]` (you counted it on the data) or `[own]` (an estimate). A number without a mark = own.
 > **Answer in the same language as the question.** No preamble. This is data for synthesis, not a message to a human.
 
 ---
@@ -29,7 +33,9 @@ Prompt (run in an isolated context, BEFORE you dispatch the panel):
 > covers a DIFFERENT failure mode — no two on the same angle; (4) draw from the base P1–P5 OR
 > mint ad-hoc domain personas (see "Palette" below) when the domain calls for it (security/
 > compliance, data-integrity, privacy, cost, performance…); (5) for an obvious, narrow question
-> just return P1–P3 — don't pad the panel.
+> just return P1–P3 — don't pad the panel; (6) if the question is an "option A vs B" choice → assign
+> stances: at least one persona defends A, at least one defends B (in the persona's prompt), the rest
+> neutral — forces real divergence instead of convergence to the average.
 > Return the persona list (name · why · prompt). Data for dispatch, not prose.
 
 The orchestrator then dispatches exactly the Marshal's panel in parallel (blind pass), appending

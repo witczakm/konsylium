@@ -12,6 +12,7 @@ The **English edition `skills/konsylium/` is canonical.** Any change you make th
 - `skills/konsylium/SKILL.md` ↔ `skills/konsylium-pl/SKILL.md`
 - `skills/konsylium/references/personas.md` ↔ `skills/konsylium-pl/references/persony.md`
 - `skills/konsylium/assets/OUTPUT_TEMPLATE.md` ↔ `skills/konsylium-pl/assets/OUTPUT_TEMPLATE.md`
+- `skills/konsylium/references/cli-recipes.md` ↔ `skills/konsylium-pl/references/uruchomienie-cli.md`
 
 CI (`.github/workflows/validate.yml`) checks that both editions have a matching file
 layout. A change to one edition only will fail the build.
